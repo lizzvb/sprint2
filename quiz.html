@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=E.0">
+    <title>Quiz</title>
+</head>
+<body>
+    
+
+<form name="meuFormulario">
+
+
+
+
+
+<label><span>A. Qual é o seu tipo de engajamento preferido?</label></span><br>
+<input type="radio" name="q1" value="A">a. Trabalhar diretamente com pessoas em situações de risco ou necessidade. <BR>
+<input type="radio" name="q1" value="B">b. Ser voluntário em abrigos de animais ou trabalhar em ONGs de resgates. <BR>
+<input type="radio" name="q1" value="C">c. Participar de projetos ambientais para preservar a natureza. <BR>
+<input type="radio" name="q1" value="D">d. Trabalhar nos bastidores, organizando e coordenando atividades. <BR>
+    <input type="radio" name="q1" value="E">e. Colaborar com equipes de tecnologia para desenvolver ferramentas para organizações sociais. <BR>
+
+        <br><br>
+        <label><span>B. Qual destas situações mais toca seu coração?</label></span><br>
+        <input type="radio" name="q2" value="A">a. Criar soluções digitais que impactem positivamente ONGs e causas sociais. <br>
+        <input type="radio" name="q2" value="B"> b. Ajudar crianças em risco e pessoas com necessidades especiais. <br>
+        <input type="radio" name="q2" value="C">c. Cuidar de animais abandonados e promover campanhas de adoção. <br>
+        <input type="radio" name="q2" value="D">d. Participar de ações que protejam a natureza e promovam a sustentabilidade. <br>
+        <input type="radio" name="q2" value="E">e. Gerenciar recursos e processos para garantir o sucesso de uma causa social. <br>
+        
+        <br><br>
+        <label><span>C. Quando pensa em ajudar, você prefere...?</label></span><br>
+        <input type="radio" name="q3" value="A"> a. Desenvolver plataformas ou aplicativos para ajudar ONGs ou causas sociais.<br>
+        <input type="radio" name="q3" value="B"> b. Trabalhar diretamente no apoio emocional e físico das pessoas. <br>
+        <input type="radio" name="q3" value="C"> c. Proteger e cuidar dos animais, como em abrigos e clínicas veterinárias. <br>
+        <input type="radio" name="q3" value="D"> d. Participar de campanhas de educação ambiental e preservação. <br>
+        <input type="radio" name="q3" value="E"> e. Organizar eventos, arrecadar recursos e coordenar campanhas.
+        
+        <br><br>
+
+        <label><span>D. Você se sente mais confortável trabalhando com...?</span><br></label>
+
+
+
+        <input type="radio" name="q4" value="A"> a. Usar minha habilidade em tecnologia para desenvolver soluções para causas
+        sociais.
+    <br>
+    
+    
+        <input type="radio" name="q4" value="B"> b. Pessoas em situação de vulnerabilidade (crianças, idosos, pessoas em
+        situação de rua)<br>
+    
+    
+        <input type="radio" name="q4" value="C">c. Animais abandonados e resgatados.
+        <br>
+    
+        <input type="radio" name="q4" value="D"> d. Meio ambiente e sustentabilidade.
+    <br>
+    
+        <input type="radio" name="q4" value="E"> e. Trabalhar nos bastidores, com organização e gestão de recursos.
+<BR>    <br>
+
+
+    <label><span>E. Se você tivesse a oportunidade de reunir um grupo de voluntários para uma ação comunitária, qual seria a sua estratégia para garantir que a ajuda tenha um impacto duradouro na comunidade?</span></label>
+<br>
+<input type="radio" name="q5" value="A"> a. Criaria um programa de capacitação para a comunidade, ensinando habilidades que possam gerar autonomia e melhorar a qualidade de vida a longo prazo. <br>
+
+<input type="radio" name="q5" value="B"> b. Focaria em ações de voluntariado que envolvem diretamente a família e a comunidade, promovendo um fortalecimento coletivo e a solidariedade entre os moradores. <br>
+
+<input type="radio" name="q5" value="C">c. Criaria um programa de adoção responsável e conscientização sobre bem-estar animal, envolvendo a comunidade local em ações de resgate e cuidados para animais em situação de rua.<br>
+
+<input type="radio" name="q5" value="D"> d. Criaria projetos de sustentabilidade, como hortas comunitárias e cooperativas, para gerar empregos e promover a segurança alimentar no longo prazo. <br>
+    
+<input type="radio" name="q5" value="E"> e. Estabeleceria parcerias com organizações locais para garantir que os recursos arrecadados cheguem de forma eficaz e continuada às pessoas que mais precisam. <br>
+    
+    
+    
+
+
+
+
+    </form>
+
+    <button onclick="enviar(event)">Enviar</button>
+
+
+<div id="div_resultado"></div>
+
+</body>
+
+<script>
+
+
+function enviar(event){
+    event.preventDefault();
+    let contagemA = 0;
+    let contagemB = 0;
+    let contagemC = 0;
+    let contagemD = 0;
+    let contagemE = 0;
+    let perguntas = ['q1', 'q2', 'q3', 'q4'];
+
+
+    let pontuacao = 0;
+            // Para cada pergunta, vamos buscar a resposta selecionada
+            for (let i = 0; i < perguntas.length; i++) {
+                const pergunta = perguntas[i];
+                const resposta = document.querySelector(`input[name="q${i}"]:checked`);
+              
+                if (resposta) {
+            // Verifica se a letra "A" foi selecionada
+            if (resposta.value == 'A') {
+                contagemA ++ ;  // Incrementa o contador cada vez que a letra "A" for selecionada
+            }
+            if (resposta.value == 'B') {
+                contagemB ++ ;  // Incrementa o contador cada vez que a letra "B" for selecionada
+            }
+            if (resposta.value == 'C') {
+                contagemC ++ ;  // Incrementa o contador cada vez que a letra "C" for selecionada
+            }
+            if (resposta.value == 'D') {
+                contagemD ++ ;  // Incrementa o contador cada vez que a letra "D" for selecionada
+            }
+            if (resposta.value == 'E') {
+                contagemE ++ ;  // Incrementa o contador cada vez que a letra "D" for selecionada
+            }
+
+
+
+        }
+            }
+
+
+if (contagemA > contagemD && contagemA > contagemB && contagemA > contagemC && contagemA > contagemE){
+
+
+    div_resultado.innerHTML = `
+<h2> Voluntário Social e Tecnológico</h2>
+Você é uma pessoa que vê a tecnologia como uma ferramenta poderosa para mudar o mundo. Seja desenvolvendo soluções digitais, criando plataformas ou aplicativos, você busca usar a inovação para melhorar a vida de quem precisa.
+`
+
+}
+
+if (contagemE > contagemD && contagemE > contagemB && contagemE > contagemC && contagemE > contagemA){
+
+    div_resultado.innerHTML = `
+   
+<h2>Voluntário Administrativo e Logístico</h2>
+Você tem uma grande habilidade para organização e gestão de recursos. Trabalhar nos bastidores de causas sociais, gerenciando eventos, recursos financeiros e equipes, é algo que te motiva e faz você se sentir útil.
+`
+
+}
+
+
+if (contagemC > contagemA && contagemC > contagemB && contagemC > contagemD && contagemC > contagemE){
+     div_resultado.innerHTML = `
+     <h2>Voluntário em Causas Sociais e Ambientais</h2>
+Você tem uma grande conexão com causas ambientais ou sociais. Seu foco está em trabalhar diretamente com a proteção de animais, a promoção de ações de sustentabilidade ou o apoio direto a pessoas em situações vulneráveis.
+
+     `
+}
+
+
+if (contagemB > contagemA && contagemB > contagemC && contagemB > contagemD && contagemB > contagemE ){
+     div_resultado.innerHTML = `
+    <h2>Voluntário de Apoio Direto às Pessoas</h2>
+Você se sente mais confortável ajudando diretamente indivíduos em situação de vulnerabilidade, como crianças, idosos e pessoas em situação de rua. Seu engajamento está mais voltado ao apoio emocional, físico e educacional.
+
+     `
+
+
+} else {
+            resultado = `<h2>Resultado Indeterminado</h2>
+            Parece que suas escolhas foram bem equilibradas!`;
+        }
+            
+
+
+    }
+
+</script>
+
+</html>
