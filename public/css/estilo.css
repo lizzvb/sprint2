@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #E3F5D6;
+  background: linear-gradient(135deg, #f4ffed, #E3F5D6);
 }
 
 :root {
@@ -19,47 +19,106 @@ body {
   display: flex;
   width: 80%;
   margin: auto;
+  
 }
 
-.header {
-  height: var(--tamanho-header);
-  border-bottom: 2px solid #32b9cd;
+
+
+
+
+
+.button {
+  background-color:#2A4D8F;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  width: 150px; /* Tamanho grande */ height: 150px; /* Tamanho grande */
+  font-size: 16px; /* Tamanho da fonte */ cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; /* Transição suave */
 }
 
-.header .container {
+.btn-redondo:hover { background-color: #0056b3; /* Cor ao passar o mouse */ transform: scale(1.1); /* Aumenta o tamanho ao passar o mouse */ } .btn-redondo:focus { outline: none; /* Remove o contorno ao focar */ }
+
+.navbar {
+  height: 80px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  background-color: #bde0fe; /* Cor de fundo da navbar */
+  padding: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra na navbar */
+  box-sizing: border-box;
+  width: 100%;
+}
+.header{
+  padding-left: 20px;
+  
+}
+.header h2{
+  color:white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  
 }
 
-.header a {
-  text-decoration: none;
-  color: #e3b062;
+.nav-items{
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
+
+.nav-botao {
+  color: white;
+  background-color: #a2d2ff; /* Cor de fundo dos botões */
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  border-radius: 20px; /* Bordas arredondadas */
+  text-decoration: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+
+.nav-botao.loogin {
+  color: black;
+  background-color: #f0f0f0; /* Cor de fundo dos botões */
+  
+ }
+
+.nav-botao.caadastro {
+  color: white;
+  background-color: #ffafcc; /* Cor de fundo dos botões */
+  }
+
+
+
+.nav-botao:hover {
+  background-color: #ffafcc; /* Cor de fundo ao passar o mouse */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao passar o mouse */
+  transform: scale(1.05); /* Aumenta o tamanho */
+}
+.nav-botao:hover.caadastro{
+  background-color: #fff;
+  color: black;
+}
+
+.nav-botao:focus {
+  outline: none; /* Remove o contorno ao focar */
+}
+
+
 
 .agora {
   font-weight: 800;
 }
 
-.navbar {
-  width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  list-style: none;
-  color: #e3b062;
-}
 
-.titulo {
-  color: #32b9cd;
-  width: fit-content;
-  font-weight: 500;
+h2 {
+  
+  color: #2A4D8F;
+  
+  text-shadow: 2px 2px 4px rgba(38, 90, 157, 0.5);
+  
 }
-
-.header h1 {
-  margin: 0;
-}
-
 .containerdois h2 {
   color: #2A4D8F;
 }
@@ -67,10 +126,17 @@ body {
 /* BANNER */
 
 .banner {
-  height: var(--tamanho-banner);
+  height: 450px;
   color: #3772FF;
   background-image: url('../assets/imgs/inicio.png');
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100%;
+  margin: auto;
+  box-shadow: 0 4px 8px #32b9cd;
+  opacity: 0.8;
 }
 
 .banner .container {
@@ -84,6 +150,8 @@ body {
   margin: 0;
   padding: 0;
   font-size: 36px;
+  
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .banner .container span {
@@ -91,15 +159,20 @@ body {
 }
 
 
-
-
 /* BANNER */
 
 .bannerdois {
-  height: var(--tamanho-banner);
+  height: 450px;
   color: #3772FF;
   background-image: url('../assets/imgs/inicio2.png');
   background-size: cover;
+  width: 100%;
+  margin: auto;
+  box-shadow: 0 4px 8px #32b9cd;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.8;
 }
 
 .bannerdois .container {
@@ -113,6 +186,8 @@ body {
   margin: 0;
   padding: 0;
   font-size: 36px;
+  
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .bannerdois .container span {
@@ -129,7 +204,45 @@ body {
 .social {
   background-color: #e5e5e5;
   display: flex;
+  width: 70%;
+  margin: auto;
+  box-shadow: 0 4px 8px #32b9cd;
+  opacity: 0; /* Começa invisível */ transform: translateY(20px); /* Ligeiramente deslocada para baixo */ transition: opacity 1s ease, transform 1s ease; /* Transição suave */
 }
+
+.social.escondido { opacity: 0; transform: translateY(20px); } 
+   
+   
+.social.visivel { opacity: 1; transform: translateY(0);}
+
+
+
+
+
+.teste {
+  justify-content: center;
+  background-color: #fff;
+  display:block;
+  text-align: center;
+  margin: 0;
+  height: 100px;
+  width: 70%;
+  margin: auto;
+  box-shadow: 0 4px 8px #32b9cd;
+  opacity: 0; /* Começa invisível */ transform: translateY(20px); /* Ligeiramente deslocada para baixo */ transition: opacity 1s ease, transform 1s ease; /* Transição suave */
+ 
+
+}
+
+
+
+.teste.escondido { opacity: 0; transform: translateY(20px); } 
+   
+   
+.teste.visivel { opacity: 1; transform: translateY(0);}
+
+
+
 
 .social .container {
   justify-content: center;
@@ -161,6 +274,14 @@ body {
   padding: 30px 0;
 }
 
+.titulodois {
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  display: block;
+  clear: both;
+}
 
 
 /* testar se consigo deixar uma div do lado da outra */
@@ -272,6 +393,7 @@ body {
 .card h2 {
   margin: 0;
   font-size: 30px;
+  
 }
 
 .formulario {
@@ -465,3 +587,5 @@ input {
   75%  {transform: rotate(-25deg)}
   100% {transform: rotate(25deg)}
 }
+
+.carrossel { position: relative; max-width: 1000px; margin: auto; overflow: hidden; } .carrossel-container { display: flex; transition: transform 0.5s ease-in-out; } .carrossel-item { min-width: 100%; box-sizing: border-box; } .carrossel-item img { width: 100%; display: block; } button.prev, button.next { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; cursor: pointer; } button.prev { left: 0; } button.next { right: 0; } button:hover { background-color: rgba(0,0,0,0.8); }

@@ -1,0 +1,68 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFC0CB; /* Cor de fundo da navbar */
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra na navbar */
+}
+.header{
+    padding-left: 20px;
+    
+}
+.header h2{
+    color:white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.nav-items{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.nav-botao {
+    color: white;
+    background-color: #FF69B4; /* Cor de fundo dos botões */
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    border-radius: 20px; /* Bordas arredondadas */
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+
+.nav-botao.login {
+    color: black;
+    background-color: #f0f0f0; /* Cor de fundo dos botões */
+    
+   }
+
+.nav-botao.cadastro {
+    color: white;
+    background-color: #FF1493; /* Cor de fundo dos botões */
+    }
+
+
+
+.nav-botao:hover {
+    background-color: #FF1493; /* Cor de fundo ao passar o mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra ao passar o mouse */
+    transform: scale(1.05); /* Aumenta o tamanho */
+}
+.nav-botao:hover.cadastro{
+    background-color: #fff;
+    color: black;
+}
+
+.nav-botao:focus {
+    outline: none; /* Remove o contorno ao focar */
+}
