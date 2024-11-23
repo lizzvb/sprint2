@@ -1,0 +1,30 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as divs passem para a próxima linha */
+    width: 90%; /* Define a largura do container, pode ajustar conforme necessário */
+    justify-content: space-between; /* Espaça as divs dentro do container */
+    gap: 40px; /* Adiciona espaçamento entre as divs */
+    
+}
+
+.box {
+    flex: 0 0 calc(50% - 40px); /* Define a largura de cada div (ajuste conforme necessário) */
+    height: 100px; /* Altura de cada div */
+    background-color: #007BFF;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
