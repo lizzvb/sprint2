@@ -1,4 +1,4 @@
-si<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -11,34 +11,23 @@ si<!DOCTYPE html>
     <script src="./js/sessao.js"></script>
 
     <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
+    <link rel="shortcut icon" href="../assets/imgs/voluntariado.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
 <body>
 
     <!--Header-->
-
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">Rede Solidária</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Sobre Mim</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
-        </div>
+  <div class="navbar">
+    <div class="header"><h2>Rede Solidária</h2></div>
+    <div class="nav-items">
+      <a href="#" class="nav-botao">Inicial</a>
+      <a href="simulador.html" class="nav-botao">Sobre Mim</a>
+      <span>|</span>
+      <a href="login.html" class="nav-botao loogin">Login</a>
+      <a href="cadastro.html" class="nav-botao caadastro">Cadastro</a>
     </div>
+  </div>
 
 
     <div class="login">
@@ -127,8 +116,7 @@ si<!DOCTYPE html>
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.CPF_USUARIO = json.cpf;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.ID_USUARIO = json.id
 
                     setTimeout(function () {
                         window.location = "./dashboard/cards.html";

@@ -1,0 +1,3 @@
+distancia / velocidade / 24
+
+distancia 

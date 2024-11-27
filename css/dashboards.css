@@ -120,7 +120,7 @@ body {
   position: relative;
   top: 0;
   left: 20%;
-  background-color: #161618;
+  background-image: url('../public/assets/imgs/abstract_pattern_design_background_2007.jpg');
   height: 100vh;
   overflow: auto;
 }
@@ -286,7 +286,7 @@ body {
   font-weight: 600;
   font-size: 18px;
   padding: 10px 15px;
-  color: #e6005a;
+  color: #e072a4;
   background-color: white;
   margin: 5px;
   border-radius: 3px;
@@ -295,11 +295,11 @@ body {
 
 .btn-pink {
   color: white;
-  background-color: #e6005a;
+  background-color: #e072a4;
 }
 
 .btn-white {
-  color: #e6005a;
+  color: #e072a4;
   background-color: white;
 
 }
@@ -349,7 +349,7 @@ canvas {
   justify-content: space-evenly;
   align-items: center;
   border-right: 3px solid #32b9cd;
-  background-color: #212124;
+  background-image: url('../public/assets/imgs/4873411.jpg');
 }
 
 .dash-right {
@@ -375,7 +375,7 @@ canvas {
 }
 
 .hello h3 {
-  color: #e3b062;
+  color: #6883ba;
   font-weight: 300;
   font-size: 1.2rem;
 }
@@ -387,7 +387,7 @@ canvas {
 .btn-nav {
   width: 40%;
   color: white;
-  background-color: #e6005a;
+  background-color: #e072a4;
   border-radius: 5px;
   text-align: center;
   padding: 2% 5%;
@@ -396,14 +396,14 @@ canvas {
 .btn-nav-white {
   width: 40%;
   background-color: white;
-  border: 3px solid #e6005a;
+  border: 3px solid #e072a4;
   border-radius: 5px;
   text-align: center;
   padding: 2% 5%;
 }
 
 .btn-nav-white h3 {
-  color: #e6005a;
+  color: #e072a4;
   padding: 0;
   margin: 0;
 }

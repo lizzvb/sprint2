@@ -1,0 +1,19 @@
+
+function guardarNomes(cadastrados = []) {
+
+cadastrados == nome
+
+for (posicao = 0; posicao < cadastrados.length; posicao ++){
+
+if (cadastrados[posicao] == nome){
+alert ('País já cadastrado')
+return
+}
+
+cadastrados.push(nome)
+
+}
+
+
+
+}
