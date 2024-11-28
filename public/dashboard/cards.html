@@ -168,7 +168,7 @@
                                 // Para cada pergunta, vamos buscar a resposta selecionada
                                 for (let i = 0; i < perguntas.length; i++) {
                                     const pergunta = perguntas[i];
-                                    const resposta = document.querySelector(`input[name="q${i}"]:checked`);
+                                    const resposta = document.querySelector(`input[name="${pergunta}"]:checked`);
                                   
                                     if (resposta) {
                                 // Verifica se a letra "A" foi selecionada
@@ -195,8 +195,14 @@
                     /* TESTE */
                                 div_resultado.innerHTML = ``
                     
+
+
+
+                               var letratipo = '' 
+
                     if (contagemA > contagemD && contagemA > contagemB && contagemA > contagemC && contagemA > contagemE){
                     
+                        letratipo = 'A'
                     
                         div_resultado.innerHTML = `
                     <h2> Voluntário Social e Tecnológico</h2>
@@ -207,7 +213,7 @@
                     }
                     
                     if (contagemE > contagemD && contagemE > contagemB && contagemE > contagemC && contagemE > contagemA){
-                    
+                     letratipo = 'B'
                         div_resultado.innerHTML = `
                        
                     <h2>Voluntário Administrativo e Logístico</h2>
@@ -218,8 +224,9 @@
                     }
                     
                     
-                    if (contagemC > contagemA && contagemC > contagemB && contagemC > contagemD && contagemC > contagemE){
-                         div_resultado.innerHTML = `
+                    if ((contagemC > contagemA && contagemC > contagemB && contagemC > contagemD && contagemC > contagemE) || (contagemD > contagemA && contagemD > contagemB && contagemD > contagemC && contagemD > contagemE ) ){
+                         letratipo = 'C'
+                        div_resultado.innerHTML = `
                          <h2>Voluntário em Causas Sociais e Ambientais</h2>
                     Você tem uma grande conexão com causas ambientais ou sociais. Seu foco está em trabalhar diretamente com a proteção de animais, a promoção de ações de sustentabilidade ou o apoio direto a pessoas em situações vulneráveis.
                     <br><center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
@@ -229,7 +236,8 @@
                     
                     
                     if (contagemB > contagemA && contagemB > contagemC && contagemB > contagemD && contagemB > contagemE ){
-                         div_resultado.innerHTML = `
+                         letratipo = 'D'
+                        div_resultado.innerHTML = `
                         <h2>Voluntário de Apoio Direto às Pessoas</h2>
                     Você se sente mais confortável ajudando diretamente indivíduos em situação de vulnerabilidade, como crianças, idosos e pessoas em situação de rua. Seu engajamento está mais voltado ao apoio emocional, físico e educacional.
                     <br><center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
@@ -238,13 +246,14 @@
                     
                     
                     } else {
+                        // mathrandom pra desempatar (entre dois) + array de respostas
                                 resultado = `<h2>Resultado Indeterminado</h2>
                                 Parece que suas escolhas foram bem equilibradas!
                         <br><center> <button  class="enviar"  onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
                     `;
                             }
                                 
-                    
+                    cadastrartipo(letratipo)
                     
                         }
 
@@ -380,6 +389,58 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
 `
 
                         }
+
+
+                        function cadastrartipo(letratipo){
+
+                            if (letratipo == 'A'){
+                                letratipo = 1
+                            }
+
+                            if (letratipo == 'B'){
+                                letratipo = 2
+                            }
+
+                            if (letratipo == 'C'){
+                                letratipo = 3
+                            }
+                            
+                            if (letratipo == 'D'){
+                                letratipo = 4
+                            }
+
+
+
+
+                            fetch(`/quiztipos/cadastrar`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                letratipoServer: letratipo,
+                usuarioServer: sessionStorage.ID_USUARIO
+
+            })
+        }).then(function (resposta) {
+
+            if (resposta.ok) {
+                window.alert("Quiz de Perfil enviado com sucesso");
+                // window.location = "/dashboard/mural.html"
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
+
+
+
+                        
                     
                     </script>
                     
@@ -390,27 +451,5 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
     </div>
 
 </body>
-
-<script>
-
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
-    }
-
-</script>
 
 </html>

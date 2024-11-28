@@ -52,7 +52,8 @@
           </div>
           <div class="campo">
             <span>CPF:</span>
-            <input id="cpf_input" type="text" placeholder="12345678901" />
+            <input id="cpf_input" type="text" placeholder="12345678901" onkeyup="validarCPF()" />
+            <div id="validacaoCPF"></div>
           </div>
           <div class="campo">
             <span>E-mail:</span>
@@ -61,11 +62,18 @@
           <div class="campo">
             <span>Senha:</span>
             <input id="senha_input" type="password" placeholder="******" />
+            
           </div>
+         
           <div class="campo">
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
           </div>
+          <div class="input-box">
+            <button class="botaozinho" type="button" onclick="gerarSenha()">Gerar Senha</button>
+        </div>
+        <div id="validacaoConfirmacao"></div>
+  
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
         <div id="div_aguardar" class="loading-div">
@@ -246,4 +254,76 @@ console.log(contador)
   function sumirMensagem() {
     cardErro.style.display = "none";
   }
+
+
+
+
+
+  
+function gerarSenha() {
+    var senhaAutoGerada = ``;
+    var Catalogo = `aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPrRsStTuUvVwWxXyYzZ0123456789`
+    var caractereEspecial = ``
+
+    for (i = 0; i < 6; i++) {
+        senhaAutoGerada += Catalogo[parseInt(Math.random() * 60)];
+    }
+
+    for(i = 0; i < 1; i++){
+        senhaAutoGerada += Catalogo[parseInt(Math.random() * 11)];
+    }
+    var novaSenha = ``
+
+    for(posicao = 7; posicao = 0; posicao--){
+        var caractere = ``
+        caractere = senhaAutoGerada[parseInt(Math.random()*posicao)]
+        senhaAutoGerada = senhaAutoGerada.replaceAll(caractere, "")
+        novaSenha += caractere
+
+    }
+
+    senha_input.value = novaSenha;
+    senha_input.type = "text";
+    confirmacao_senha_input.value = novaSenha;
+    confirmacao_senha_input.type = "text";
+
+    validarSenha();
+    confirmacaoSenha();
+}
+
+function tirarPontuacao(texto=''){
+    var textoFinal = ``
+    for(posicao=0;posicao < texto.length;posicao++){
+        if(texto[posicao]==Number(texto[posicao])){
+            textoFinal += texto[posicao]
+        }
+    }
+    return textoFinal
+}
+
+
+function validarCPF() {
+    var cpf = cpf_input.value;
+    var cpfSemantico = ``;
+    cpf = tirarPontuacao(cpf)
+
+    for (var posição = 0; posição < cpf.length; posição++) {
+        if (posição == 3 || posição == 6) cpfSemantico += `.`;
+        if (posição == 9) cpfSemantico += `-`;
+        cpfSemantico += cpf[posição];
+    }
+
+    if (cpf.length == 11) {
+        validacaoCPF.innerHTML = `<div style="color: green;">Seu CPF está válido ${cpfSemantico}</div><br>`;
+        cpf_input.value = cpfSemantico;
+        cpfFinal = cpf
+    } else {
+        validacaoCPF.innerHTML = `<div style="color: red;">CPF inválido, insira apenas a quantidade correta de números (11)</div><br>`;
+        cpf_input.value = cpfSemantico;
+        cpfFinal = null
+    }
+}
+    
+
+
 </script>

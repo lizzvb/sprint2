@@ -2,113 +2,186 @@ CREATE DATABASE redesolidaria;
 
 USE redesolidaria;
 
-
-
-create table questionarioperfil (
-idperfil int primary key,
-nomeperfil varchar(45)
+-- Tabela de questionário de perfil
+CREATE TABLE questionarioperfil (
+    idperfil INT PRIMARY KEY,
+    nomeperfil VARCHAR(45)
 );
 
-
-insert into questionarioperfil values 
+INSERT INTO questionarioperfil VALUES 
 (1, 'Voluntário Social e Tecnológico'),
 (2, 'Voluntário Administrativo e Logístico'),
 (3, 'Voluntário em Causas Sociais e Ambientais'), 
 (4, 'Voluntário de Apoio Direto às Pessoas');
 
-select count(idperfil) as 'Quantidade total de perfis' from questionarioperfil;
 
 
--- contar todos idperfil, e molstrar o max/count/ordenar (group by idperfil)
--- fazer calculo nol chartjs (maior/todos)
+SELECT COUNT(idperfil) AS 'Quantidade total de perfis' FROM questionarioperfil;
 
+-- Tabela de questionário de região
+CREATE TABLE questionarioregiao (
+    idlocal INT PRIMARY KEY, 
+    regiaobrasil VARCHAR(45)
+);
 
-
-
-create table questionarioregiao (
-idlocal int primary key, 
-regiaobrasil varchar(45)); -- sul, sudeste...
--- count idlocal, max..... ver regiao com +
--- todas vao pra usuario
-
-insert into questionarioregiao values 
+INSERT INTO questionarioregiao VALUES 
 (1, 'Sul'),
 (2, 'Sudeste'),
 (3, 'Norte'),
 (4, 'Nordeste'),
 (5, 'Centro-Oeste');
 
-
-
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-    cpf char(11),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-    fk_questionarioperfil int, 
-foreign key (fk_questionarioperfil) references questionarioperfil(idperfil),
-fk_questionarioregiao int, 
-foreign key (fk_questionarioregiao) references questionarioregiao(idlocal),
-fk_estado int,
-foreign key (fk_estado) references estado(idestado)
+-- Tabela de relacionamento entre perfil e região
+CREATE TABLE questionario_perfil_regiao (
+    id_perfil INT,
+    id_regiao INT,
+    PRIMARY KEY (id_perfil, id_regiao),
+    FOREIGN KEY (id_perfil) REFERENCES questionarioperfil(idperfil),
+    FOREIGN KEY (id_regiao) REFERENCES questionarioregiao(idlocal)
 );
 
+-- Inserção de dados na tabela de relacionamento
+INSERT INTO questionario_perfil_regiao (id_perfil, id_regiao) VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4);
 
-insert usuario values 
-(1, 'Liz', '36176829877', 'liz.bohn@sptech.school',  'abc12345', 3, 2),
+SELECT qpr.id_perfil, qpr.id_regiao, qp.nomeperfil, qr.regiaobrasil
+FROM questionario_perfil_regiao as qpr
+JOIN questionarioperfil qp ON qpr.id_perfil = qp.idperfil
+JOIN questionarioregiao qr ON qpr.id_regiao = qr.idlocal;
 
-(2, 'Maria', '36176829870', 'abc@outlook.com', 'abc12346', 2, 1),
+-- Tabela de estado
+CREATE TABLE estado (
+    idestado INT PRIMARY KEY,
+    estado CHAR(2),
+    fk_regiao INT,
+    FOREIGN KEY (fk_regiao) REFERENCES questionarioregiao(idlocal)
+);
+
+-- Inserir dados na tabela de estado
+-- Região Sul
+INSERT INTO estado (idestado, estado, fk_regiao) VALUES
+(1, 'PR', 1), -- Paraná
+(2, 'RS', 1), -- Rio Grande do Sul
+(3, 'SC', 1); -- Santa Catarina
+
+-- Região Sudeste
+INSERT INTO estado (idestado, estado, fk_regiao) VALUES
+(4, 'ES', 2), -- Espírito Santo
+(5, 'MG', 2), -- Minas Gerais
+(6, 'RJ', 2), -- Rio de Janeiro
+(7, 'SP', 2); -- São Paulo
+
+-- Região Norte
+INSERT INTO estado (idestado, estado, fk_regiao) VALUES
+(8, 'AC', 3), -- Acre
+(9, 'AP', 3), -- Amapá
+(10, 'AM', 3), -- Amazonas
+(11, 'PA', 3), -- Pará
+(12, 'RO', 3), -- Rondônia
+(13, 'RR', 3), -- Roraima
+(14, 'TO', 3); -- Tocantins
+
+-- Região Nordeste
+INSERT INTO estado (idestado, estado, fk_regiao) VALUES
+(15, 'AL', 4), -- Alagoas
+(16, 'BA', 4), -- Bahia
+(17, 'CE', 4), -- Ceará
+(18, 'MA', 4), -- Maranhão
+(19, 'PB', 4), -- Paraíba
+(20, 'PE', 4), -- Pernambuco
+(21, 'PI', 4), -- Piauí
+(22, 'RN', 4), -- Rio Grande do Norte
+(23, 'SE', 4); -- Sergipe (removido duplicata de Sergipe)
+
+-- Região Centro-Oeste
+INSERT INTO estado (idestado, estado, fk_regiao) VALUES
+(25, 'DF', 5), -- Distrito Federal
+(26, 'GO', 5), -- Goiás
+(27, 'MS', 5), -- Mato Grosso do Sul
+(28, 'MT', 5); -- Mato Grosso
+
+-- Tabela de usuário
+CREATE TABLE usuario (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    cpf CHAR(11),
+    email VARCHAR(50),
+    senha VARCHAR(50),
+    fk_questionarioperfil INT,
+    FOREIGN KEY (fk_questionarioperfil) REFERENCES questionarioperfil(idperfil),
+    fk_questionarioregiao INT,
+    FOREIGN KEY (fk_questionarioregiao) REFERENCES questionarioregiao(idlocal),
+    fk_estado INT,
+    FOREIGN KEY (fk_estado) REFERENCES estado(idestado)
+);
+
+-- Inserção de dados na tabela de usuário
+INSERT INTO usuario (nome, cpf, email, senha, fk_questionarioperfil, fk_questionarioregiao, fk_estado) 
+VALUES 
+('Liz', '36176829877', 'liz.bohn@sptech.school', 'abc12345', 3, 2, 5),
+('Maria', '36176829870', 'abc@outlook.com', 'abc12346', 2, 1, 1),
+('Paula', '36176829899', 'teste@outlook.com', 'abc12341', 2, 1, 1),
+('Carla', '36176829879', 'abcd123@hotmail.com', 'abc12342', 4, 3, 10);
 
 
-(3, 'Paula', '36176829899', 'teste@outlook.com', 'abc12341', 2, 1),
+-- usando de parametro pra api
+UPDATE usuario set fk_questionarioperfil = ? where id = ? ;
 
 
-(4, 'Carla', '36176829879', 'abcd123@hotmail.com', 'abc12342', 4, 3);
+-- Consultar quantidade de usuários por estado
+SELECT e.estado, COUNT(u.id) AS 'Quantidade de Usuários'
+FROM usuario u
+JOIN estado e ON u.fk_estado = e.idestado
+GROUP BY e.idestado;
+
+-- Consultar quantidade de usuários por perfil
+SELECT q.nomeperfil, COUNT(u.id) AS QtdUsuarios
+FROM usuario u
+JOIN questionarioperfil q ON u.fk_questionarioperfil = q.idperfil
+GROUP BY q.idperfil;
+
+SELECT q.nomeperfil, COUNT(u.id) AS QtdUsuarios
+FROM usuario u
+JOIN questionarioperfil q ON u.fk_questionarioperfil = q.idperfil
+GROUP BY q.idperfil order by  QtdUsuarios desc ;
 
 
-select * from usuario join questionarioregiao on idlocal = fk_questionarioregiao;
 
-select * from usuario join questionarioperfil on idperfil = fk_questionarioperfil;
+-- Consultar quantidade de usuários por região
+SELECT r.regiaobrasil, COUNT(u.id) AS 'Quantidade de Usuários'
+FROM usuario u
+JOIN questionarioregiao r ON u.fk_questionarioregiao = r.idlocal
+GROUP BY r.idlocal;
 
-
-select count(fk_questionarioperfil) as 'Quantidade de pessoas que fizeram perfil' from usuario;
-
-
-select count(fk_questionarioperfil) as 'Quantidade de pessoas que fizeram região' from usuario;
-
-
--- select count(fk_questionarioregiao) as 'Quantidade por Região' from usuario group by id;
-
--- select count(fk_questionarioperfil) as 'Quantidade por perfil' from usuario;
-
-
-
-create table estado (
-idestado int primary key,
-estado char(2),
-fk_regiao int,
-foreign key (fk_regiao) references questionarioregiao (idlocal));
--- count idlocal, max..... ver estado com +
--- todas vao pra usuario
--- imtegraer estado- regiao
-
-
--- insert into idestado, estado, fk_regiao values
-
-
+-- Tabela de quiz
 CREATE TABLE quiz (
     idquiz INT PRIMARY KEY AUTO_INCREMENT,
     pontuacao INT NOT NULL,  
     tempo_total INT NOT NULL, -- minutos, segundos  
-	fk_usuario int,
-    foreign key (fk_usuario) references usuario(id)
+    fk_usuario INT,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
 );
--- average no tempototal
--- 1:1s
 
+-- Inserção de dados na tabela quiz
+INSERT INTO quiz (pontuacao, tempo_total, fk_usuario) 
+VALUES (8, 150, 1),
+       (6, 120, 2),
+       (9, 180, 3),
+       (10, 240, 4);
 
-select * from usuario;
-select * from questionarioperfil;
-select * from questionarioregiao;
-select * from quiz;
+-- Consultar média do tempo total
+SELECT AVG(tempo_total) AS 'Média do Tempo Total'
+FROM quiz;
+
+-- Consultar maior pontuação
+SELECT MAX(pontuacao) AS 'Maior Pontuação'
+FROM quiz;
+
+-- Consultar todos os dados
+SELECT * FROM usuario;
+SELECT * FROM questionarioperfil;
+SELECT * FROM questionarioregiao;
+SELECT * FROM quiz;
