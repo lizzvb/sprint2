@@ -126,6 +126,7 @@ body {
   padding: 0 0 10px 0;
 }
 
+
 .div-results {
   width: 100%;
 }
@@ -220,6 +221,23 @@ body {
 .ideal {
   background-color: #9ccc65;
 }
+
+
+.div_grande {
+
+display: flex;
+justify-content: space-between;
+gap:80px;
+flex-wrap: wrap
+}
+
+
+.div_canvas {
+  background-color: white;
+  height: 500px;
+  width: 600px;
+}
+
 
 .div_questao {
   background-color: #fefefe;

@@ -15,11 +15,12 @@ function autenticar(req, res) {
                 console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`);
 
                 if (resultadoAutenticar.length == 1) {
-                    const usuario = resultadoAutenticar[0];
+                    const usuario = resultadoAutenticar[0]; // ARRAY DO BD
                     res.json({
                         id: usuario.id,
                         nome: usuario.nome,
                         email: usuario.email,
+                        tipoquiz:usuario.fk_questionarioperfil, 
                         senha: usuario.senha
                     });
                 } else if (resultadoAutenticar.length == 0) {
@@ -60,7 +61,41 @@ function cadastrar(req, res) {
     }
 }
 
+var usuarioModel = require("../models/usuarioModel");
+
+
+function obterPerfil(req, res) {
+    const idUsuario = req.query.id;
+
+    // Log para verificar se o ID foi recebido corretamente
+    console.log("ID recebido na API:", idUsuario);
+
+    if (!idUsuario) {
+        res.status(400).send("ID do usuário não fornecido.");
+        return;
+    }
+
+    usuarioModel.obterPerfilUsuario(idUsuario)
+        .then((resultado) => {
+            // Log para verificar o resultado da consulta no banco de dados
+            console.log("Resultado da consulta SQL:", resultado);
+
+            if (resultado.length > 0) {
+                res.json({ nomeperfil: resultado[0].nomeperfil });
+            } else {
+                res.status(404).send("Usuário não encontrado.");
+            }
+        })
+        .catch((erro) => {
+            console.error("Erro ao buscar perfil do usuário:", erro);
+            res.status(500).send("Erro ao buscar perfil do usuário.");
+        });
+}
+
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    obterPerfil
 };

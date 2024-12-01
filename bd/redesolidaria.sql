@@ -60,6 +60,10 @@ CREATE TABLE estado (
     FOREIGN KEY (fk_regiao) REFERENCES questionarioregiao(idlocal)
 );
 
+select * from estado;
+
+ 
+
 -- Inserir dados na tabela de estado
 -- Região Sul
 INSERT INTO estado (idestado, estado, fk_regiao) VALUES
@@ -96,12 +100,24 @@ INSERT INTO estado (idestado, estado, fk_regiao) VALUES
 (22, 'RN', 4), -- Rio Grande do Norte
 (23, 'SE', 4); -- Sergipe (removido duplicata de Sergipe)
 
+
+
+
 -- Região Centro-Oeste
 INSERT INTO estado (idestado, estado, fk_regiao) VALUES
 (25, 'DF', 5), -- Distrito Federal
 (26, 'GO', 5), -- Goiás
 (27, 'MS', 5), -- Mato Grosso do Sul
 (28, 'MT', 5); -- Mato Grosso
+
+-- Tabela de quiz
+CREATE TABLE quiz (
+    idquiz INT PRIMARY KEY AUTO_INCREMENT,
+    pontuacao INT,  
+    tempo_total INT-- minutos, segundos  
+);
+
+
 
 -- Tabela de usuário
 CREATE TABLE usuario (
@@ -115,7 +131,9 @@ CREATE TABLE usuario (
     fk_questionarioregiao INT,
     FOREIGN KEY (fk_questionarioregiao) REFERENCES questionarioregiao(idlocal),
     fk_estado INT,
-    FOREIGN KEY (fk_estado) REFERENCES estado(idestado)
+    FOREIGN KEY (fk_estado) REFERENCES estado(idestado),
+    fk_quiz int,
+    foreign key (fk_quiz) references quiz(idquiz)
 );
 
 -- Inserção de dados na tabela de usuário
@@ -127,15 +145,13 @@ VALUES
 ('Carla', '36176829879', 'abcd123@hotmail.com', 'abc12342', 4, 3, 10);
 
 
--- usando de parametro pra api
-UPDATE usuario set fk_questionarioperfil = ? where id = ? ;
 
 
 -- Consultar quantidade de usuários por estado
-SELECT e.estado, COUNT(u.id) AS 'Quantidade de Usuários'
+SELECT e.estado, COUNT(u.id) AS 'QtdUsuarios'
 FROM usuario u
-JOIN estado e ON u.fk_estado = e.idestado
-GROUP BY e.idestado;
+JOIN estado e ON u.fk_estado = e.idestado 
+GROUP BY e.idestado ORDER BY COUNT(u.id) DESC;
 
 -- Consultar quantidade de usuários por perfil
 SELECT q.nomeperfil, COUNT(u.id) AS QtdUsuarios
@@ -146,7 +162,7 @@ GROUP BY q.idperfil;
 SELECT q.nomeperfil, COUNT(u.id) AS QtdUsuarios
 FROM usuario u
 JOIN questionarioperfil q ON u.fk_questionarioperfil = q.idperfil
-GROUP BY q.idperfil order by  QtdUsuarios desc ;
+GROUP BY q.idperfil order by  QtdUsuarios desc limit 1;
 
 
 
@@ -156,21 +172,14 @@ FROM usuario u
 JOIN questionarioregiao r ON u.fk_questionarioregiao = r.idlocal
 GROUP BY r.idlocal;
 
--- Tabela de quiz
-CREATE TABLE quiz (
-    idquiz INT PRIMARY KEY AUTO_INCREMENT,
-    pontuacao INT NOT NULL,  
-    tempo_total INT NOT NULL, -- minutos, segundos  
-    fk_usuario INT,
-    FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-);
-
 -- Inserção de dados na tabela quiz
-INSERT INTO quiz (pontuacao, tempo_total, fk_usuario) 
-VALUES (8, 150, 1),
-       (6, 120, 2),
-       (9, 180, 3),
-       (10, 240, 4);
+INSERT INTO quiz (pontuacao, tempo_total) 
+VALUES (8, 150),
+       (6, 120),
+       (9, 180),
+       (10, 240);
+
+
 
 -- Consultar média do tempo total
 SELECT AVG(tempo_total) AS 'Média do Tempo Total'
@@ -185,3 +194,14 @@ SELECT * FROM usuario;
 SELECT * FROM questionarioperfil;
 SELECT * FROM questionarioregiao;
 SELECT * FROM quiz;
+
+-- select do perfil dependendo do usuario
+ SELECT q.nomeperfil 
+        FROM usuario u
+        JOIN questionarioperfil q ON u.fk_questionarioperfil = q.idperfil
+        WHERE u.id = idperfil;
+
+
+
+
+select * from usuario;

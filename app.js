@@ -18,6 +18,10 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var quizRouter = require("./src/routes/quiztipos");
+var quizlocalRouter = require("./src/routes/quizlocal");
+var quizdesafioRouter = require("./src/routes/quizdesafio");
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +32,10 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/quiztipos", quizRouter);
+app.use("/quizlocal", quizlocalRouter);
+app.use("/quizdesafio", quizdesafioRouter);
+
+
 
 app.listen(PORTA_APP, function () {
     console.log(`

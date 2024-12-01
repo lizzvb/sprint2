@@ -20,7 +20,7 @@
         rel="stylesheet">
 </head>
 
-<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">
+<body onload="validarSessao(),   carregarPerfil()">
 
     <div class="janela">
 
@@ -29,8 +29,13 @@
             <h1>Rede Solidária</h1>
 
             <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3><br></div>
+                
+
+                <div class="hello">
+                   <center> <h3>Seu Perfil de Voluntário é: <br><span id="user-profile">Carregando...</span></h3>
+                
+                   </center>  </div>
 
             <div class="btn-nav">
                 <h3>Quiz</h3>
@@ -57,7 +62,7 @@
 
 
                 <h1>Qual tipo de voluntariado combina com você?</h1>
-                <form name="meuFormulario">
+                <form name="meuFormulario" id="meuFormulario">
 
 
 
@@ -152,6 +157,8 @@
                     </body>
                     
                     <script>
+                        console.log(sessionStorage.getItem('ID_USUARIO'));
+
                     
                     
                     function enviar(event){
@@ -193,21 +200,24 @@
                             }
                                 }
                     /* TESTE */
-                                div_resultado.innerHTML = ``
+                               //  div_resultado.innerHTML = ``
                     
 
-
-
+                                meuFormulario.style.display = "none"  
                                var letratipo = '' 
 
                     if (contagemA > contagemD && contagemA > contagemB && contagemA > contagemC && contagemA > contagemE){
                     
                         letratipo = 'A'
+
+                        
                     
                         div_resultado.innerHTML = `
                     <h2> Voluntário Social e Tecnológico</h2>
                     Você é uma pessoa que vê a tecnologia como uma ferramenta poderosa para mudar o mundo. Seja desenvolvendo soluções digitais, criando plataformas ou aplicativos, você busca usar a inovação para melhorar a vida de quem precisa.
-                   <br> <center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
+                   <br> <center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center><br><br><br>
+                   <div class="div_questao">
+                   <center><h2>Quiz 2:</h2><br> <button class="enviar" onclick="quiz2()">De onde você é?</button></center></div>
                     `
                     
                     }
@@ -218,7 +228,9 @@
                        
                     <h2>Voluntário Administrativo e Logístico</h2>
                     Você tem uma grande habilidade para organização e gestão de recursos. Trabalhar nos bastidores de causas sociais, gerenciando eventos, recursos financeiros e equipes, é algo que te motiva e faz você se sentir útil.
-                    <br><center><button class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
+                    <br><center><button class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center><br><br><br>
+                   <div class="div_questao">
+                   <center><h2>Quiz 2:</h2><br> <button class="enviar" onclick="quiz2()">De onde você é?</button></center></div>
                     `
                     
                     }
@@ -229,7 +241,9 @@
                         div_resultado.innerHTML = `
                          <h2>Voluntário em Causas Sociais e Ambientais</h2>
                     Você tem uma grande conexão com causas ambientais ou sociais. Seu foco está em trabalhar diretamente com a proteção de animais, a promoção de ações de sustentabilidade ou o apoio direto a pessoas em situações vulneráveis.
-                    <br><center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
+                    <br><center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center><br><br><br>
+                   <div class="div_questao">
+                   <center><h2>Quiz 2:</h2><br> <button class="enviar" onclick="quiz2()">De onde você é?</button></center></div>
                     
                          `
                     }
@@ -240,7 +254,9 @@
                         div_resultado.innerHTML = `
                         <h2>Voluntário de Apoio Direto às Pessoas</h2>
                     Você se sente mais confortável ajudando diretamente indivíduos em situação de vulnerabilidade, como crianças, idosos e pessoas em situação de rua. Seu engajamento está mais voltado ao apoio emocional, físico e educacional.
-                    <br><center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center>
+                    <br><center><button  class="enviar" onclick="tipos()">Saiba mais sobre esse e outros tipos...</button></center><br><br><br>
+                   <div class="div_questao">
+                   <center><h2>Quiz 2:</h2><br> <button class="enviar" onclick="quiz2()">De onde você é?</button></center></div>
                     
                          `
                     
@@ -259,7 +275,7 @@
 
 
                         function tipos(){
-                            
+                            meuFormulario.style.display = "block"
                             meuFormulario.innerHTML = ``
                             div_resultado.innerHTML = ``
 
@@ -386,10 +402,158 @@ Para os voluntários, o apoio direto às pessoas oferece uma experiência profun
 
 Ao atuar diretamente no auxílio às pessoas, os voluntários não só transformam as vidas de quem recebem a ajuda, mas também ampliam seu próprio entendimento sobre solidariedade, generosidade e o impacto que pequenas ações podem ter no bem-estar coletivo.
 </div>
+
+
 `
 
                         }
 
+
+
+
+
+                        
+
+                        function quiz2(){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            div_resultado.innerHTML = `
+
+                            <div class="div_questao">
+    <label><span>A. Qual região do Brasil você pertence?</label></span><br>
+    
+
+    <input type="radio" name="q12" value="A">a. Nordeste. <BR>
+    <input type="radio" name="q12" value="B">b. Norte. <BR>
+    <input type="radio" name="q12" value="C">c. Sul. <BR>
+    <input type="radio" name="q12" value="D">d. Sudeste. <BR>
+    </div>
+<br><br>
+    <div class="div_questao">
+        <label for="estado"><span>B. Qual destes estados você reside?</span></label><br>
+<select id="estado" name="estado">
+    <option value="8">Acre</option>
+<option value="15">Alagoas</option>
+<option value="9">Amapá</option>
+<option value="10">Amazonas</option>
+<option value="16">Bahia</option>
+<option value="17">Ceará</option>
+<option value="25">Distrito Federal</option>
+<option value="4">Espírito Santo</option>
+<option value="26">Goiás</option>
+<option value="18">Maranhão</option>
+<option value="28">Mato Grosso</option>
+<option value="27">Mato Grosso do Sul</option>
+<option value="5">Minas Gerais</option>
+<option value="11">Pará</option>
+<option value="19">Paraíba</option>
+<option value="1">Paraná</option>
+<option value="20">Pernambuco</option>
+<option value="21">Piauí</option>
+<option value="6">Rio de Janeiro</option>
+<option value="22">Rio Grande do Norte</option>
+<option value="2">Rio Grande do Sul</option>
+<option value="12">Rondônia</option>
+<option value="13">Roraima</option>
+<option value="3">Santa Catarina</option>
+<option value="7">São Paulo</option>
+<option value="23">Sergipe</option>
+<option value="14">Tocantins</option>
+
+</select>
+    
+        </div>
+                <br>
+               
+                   <center> <button class="enviar" onclick="enviarquizdois()">Enviar</button></center>
+              
+        
+
+        `
+
+                        }
+
+
+                        function enviarquizdois (){
+                            var numeroregiao = document.querySelector('input[name="q12"]:checked')?.value;
+                            var qualestado = estado.value;
+                        cadastrarlocal(numeroregiao, qualestado)
+
+div_resultado.innerHTML = `
+                        <center> <button class="enviar" onclick="quiztres()">Começar o Quiz Desafio</button></center>
+`
+                            
+                            
+                            
+                            
+                                        }
+                    
+                        function cadastrarlocal(numeroregiao, qualestado){
+
+if (numeroregiao == 'A'){
+    numeroregiao = 1
+}
+
+if (numeroregiao == 'B'){
+    numeroregiao = 2
+}
+
+if (numeroregiao == 'C'){
+    numeroregiao = 3
+}
+
+if (numeroregiao == 'D'){
+    numeroregiao = 4
+}
+
+
+
+
+        
+
+
+        fetch(`/quizlocal/cadastrar`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                qualregiaoServer: numeroregiao,
+                qualestadoServer: qualestado,
+                usuarioServer: sessionStorage.ID_USUARIO
+
+            })
+        }).then(function (resposta) {
+
+            if (resposta.ok) {
+                window.alert("Quiz de Local enviado com sucesso");
+                // window.location = "/dashboard/mural.html"
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
+
+                        
 
                         function cadastrartipo(letratipo){
 
@@ -413,7 +577,7 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
 
 
                             fetch(`/quiztipos/cadastrar`, {
-            method: "PUT",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -438,10 +602,61 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
     }
 
 
+    function carregarPerfil() {
+    console.log("Função carregarPerfil foi chamada");
+    const usuarioID = sessionStorage.getItem('ID_USUARIO');
+
+    if (!usuarioID) {
+        console.error("ID do usuário não encontrado no sessionStorage.");
+        document.getElementById('user-profile').innerText = "ID do usuário não definido.";
+        return;
+    }
+
+    fetch(`/usuarios/perfil?id=${usuarioID}`)
+        .then((res) => {
+            console.log("Resposta da API:", res);
+            if (res.ok) {
+                return res.json();
+            } else {
+                document.getElementById('user-profile').innerText = "Erro ao carregar o perfil.";
+                throw new Error(`Erro na API: ${res.status}`);
+            }
+        })
+        .then((dados) => {
+            console.log("Dados recebidos:", dados);
+            if (dados && dados.nomeperfil) {
+                document.getElementById('user-profile').innerHTML = 
+              `  
+                
+                ${dados.nomeperfil}. <br>
+<a style="color: purple; font-weight: normal;" id="link-saiba-mais" href="#"><br>Saiba mais sobre <br>e outros tipos de perfil...</a> `
+
+document.getElementById('link-saiba-mais').addEventListener('click', function(event) {
+    event.preventDefault(); // Impede que o link recarregue a página
+    tipos(); // Chama a função tipos()
+});
+                
+                
+                
+            } else {
+                document.getElementById('user-profile').innerText = "Você ainda não realizou o Quiz de Perfil.";
+            }
+        })
+        .catch((erro) => {
+            console.error("Erro na solicitação:", erro);
+            document.getElementById('user-profile').innerText = "Você ainda não fez o Quiz de Perfil.";
+        });
+}
 
 
-                        
-                    
+
+function quiz3(){
+
+    div_resultado.innerHTML = ``
+}
+
+
+
                     </script>
                     
             </div>

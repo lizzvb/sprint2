@@ -12,4 +12,9 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+// Adicione esta rota para obter o perfil do usuário
+router.get("/perfil", usuarioController.obterPerfil);
+
+
+
 module.exports = router;

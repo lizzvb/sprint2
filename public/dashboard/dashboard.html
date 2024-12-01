@@ -2,104 +2,129 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rede Solidária | Dashboards</title>
+  <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rede Solidária | Dashboards</title>
 
-    
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-    <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+  <link rel="stylesheet" href="./../css/dashboards.css">
+  <link rel="stylesheet" href="./../css/estilo.css" />
+  <script src="../js/sessao.js"></script>
+  <script src="./../js/alerta.js"></script>
 
-    <!-- scripts do Chart.js - 2022-1 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
-    <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+  <!-- scripts do Chart.js - 2022-1 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!--FONT AWESOME-->
+  <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
 </head>
+<style>#rosca {
+  width: 200px;
+  height: 200px;
+}
+</style>
+
+<body onload="obterDados(), carregarPerfil()">
 
 
-<body onload="obterDados()">
-    
+
+  <div class="janela">
+    <div class="header-left">
+      <h1>Rede Solidária</h1>
+
+      <div class="hello">
+        <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+      </div><br>
 
 
-    <div class="janela">
-        <div class="header-left">
-            <h1>Rede Solidária</h1>
+      <div class="hello">
+        <center><h3>Seu Perfil de Voluntário é: <br>
+        <span id="user-profile">Carregando...</span></h3></center>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!<br>
-                
-                Seu CPF: <span id="b_cpf">CPF</span>    </h3>
-            </div>
 
-            <div class="btn-nav-white">
-                <a href="./cards.html">
-                    <h3>Quiz</h3>
-                </a>
-            </div>
+      </div>
 
-            <div class="btn-nav">
+      <div class="btn-nav-white">
+        <a href="./cards.html">
+          <h3>Quiz</h3>
+        </a>
+      </div>
 
-                <h3>Gráficos</h3>
+      <div class="btn-nav">
 
-            </div>
+        <h3>Gráficos</h3>
 
-          
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
+      </div>
 
+
+      <div class="btn-logout" onclick="limparSessao()">
+        <h3>Sair</h3>
+      </div>
+
+    </div>
+
+
+
+    <div class="dash">
+      <div id="alerta">
+      </div>
+      <div class="area-parametros-alerta">
+        <p class="titulo-legenda">
+          Legenda - Parâmetros dos Resultados
+        </p>
+        <div class="parametros-alerta">
+          <div class="item-regua perigo-frio">
+            <p>Perfil Predominante:</p>
+            <p id="p_kpium"></p>
+          </div>
+          <div class="item-regua alerta-frio">
+            <p>Local do Brasil com maior taxa de usuários:</p>
+            <p>&lt;=10°C</p>
+          </div>
+          <div class="item-regua ideal">
+            <p>Estado predominante entre os usuários:</p>
+            <p>20°C</p>
+          </div>
+          <div class="item-regua alerta-quente">
+            <p>Tempo médio dos usuários gasto no Quiz Desafio:</p>
+            <p>&gt;=22°C</p>
+          </div>
+          <div class="item-regua perigo-quente">
+            <p>Maior pontuação no Quiz Desafio:</p>
+            <p>&gt;=23°C</p>
+          </div>
         </div>
+      </div><br><br>
 
+      <div class="div_grande">
+        <!-- Elemento canvas onde o gráfico de linha será desenhado -->
+         <div class="div_canvas">
+         <center><h2>Tipos de Perfil de Voluntariado</h2></center>
+        <canvas id="rosca"></canvas></div>
 
+        <!-- Elemento canvas onde o gráfico de barra será desenhado -->
+        <div class="div_canvas">
+         <center> <h2>Maiores Pontuações no Quiz</h2></center>
+        <canvas id="barra"></canvas></div>
 
-        <div class="dash">
-            <div id="alerta">
-            </div>
-            <div class="area-parametros-alerta">
-                <p class="titulo-legenda">
-                    Legenda - Parâmetros dos Resultados
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perfil Predominante:</p>
-                        <p id="p_kpium"></p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Local do Brasil com maior taxa de usuários:</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Estado predominante entre os usuários:</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Tempo médio dos usuários gasto no Quiz Desafio:</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Maior pontuação no Quiz Desafio:</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>
-            </div>
+        <div class="div_canvas">
+          <center>  <h2>Locais do Brasil dos usuários</h2></center>
+          <canvas id="linhaa"></canvas></div>
+  
 
-            <div>
-                <!-- Elemento canvas onde o gráfico de linha será desenhado -->
-                <canvas id="rosca"></canvas>
-                <!-- Elemento canvas onde o gráfico de barra será desenhado -->
-                <canvas id="barra"></canvas>
-              </div>
-            
+        <div class="div_canvas">
+        <center>  <h2>Estados dos Usuários</h2></center>
+        <canvas id="linhaa"></canvas></div>
+
+      </div>
+
 
 
 </body>
@@ -107,168 +132,500 @@
 </html>
 
 <script>
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO; 
-    b_cpf.innerHTML = sessionStorage.getItem("CPF_USUARIO");
+  console.log(sessionStorage.getItem('ID_USUARIO'));
 
-    
-
+  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
 
 
-
-
-
-
-
-
-
-
-
-
-// Função chamada ao carregar a página para obter e processar os dados
-function obterDados() {
-  // Aqui seria a função que obteria os dados do banco de dados
-  // No caso, aqui você colocaria o fetch que teria o endereço da sua rota que você criou na pasta /routes e chamaria a função plotarGraficoRosca nessa função. Exemplo:
-
-  fetch(`/quiztipos/contagem`, { cache: 'no-store' }).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (resposta) {
-        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-        plotarGraficoRosca(resposta);
-        gerarkpiperfilpredominante(resposta);
-
-
-      });
-    } else {
-      console.error('Nenhum dado encontrado ou erro na API');
+  function plotarGraficolinhaa(dados) {
+    // Verifica se os dados estão no formato correto
+    if (!Array.isArray(dados) || dados.length === 0) {
+        console.error("Os dados fornecidos para o gráfico estão vazios ou no formato errado:", dados);
+        return;
     }
-  })
-    .catch(function (error) {
-      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+
+    var votos = [];
+    var estados = [];
+
+    // Preenchendo os arrays com os dados
+    for (var i = 0; i < dados.length; i++) {
+        if (dados[i].QtdUsuarios !== undefined && dados[i].estado !== undefined) {
+            votos.push(dados[i].QtdUsuarios);
+            estados.push(dados[i].estado);
+        } else {
+            console.error(`Dados incompletos na posição ${i}:`, dados[i]);
+        }
+    }
+
+    console.log("Estados:", estados); // Debug
+    console.log("Votos:", votos);     // Debug
+
+    const ctxlinha = document.getElementById('linhaa')?.getContext('2d');
+    if (!ctxlinha) {
+        console.error("Canvas 'linhaa' não encontrado.");
+        return;
+    }
+
+    // Inicializa o gráfico de linha
+    new Chart(ctxlinha, {
+        type: 'line',
+        data: {
+            labels: estados, // Rótulos do eixo X
+            datasets: [{
+                label: 'Usuários por Estado',
+                data: votos, // Dados do eixo Y
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true // Começa no zero
+                }
+            }
+        }
     });
 }
-// Como eu não configurei as rotas, eu criei um array com os dados para simular a obtenção dos dados
-// var dados = [{
-//  tipo: 'Voluntário Social e Tecnológico',
-/*  votos: 10
-},
-{
-  tipo: 'Voluntário Administrativo e Logístico',
-  votos: 5
-},
-{
-  tipo: 'Voluntário em Causas Sociais e Ambientais',
-  votos: 15
-},
-{
-  tipo: 'Voluntário de Apoio Direto às Pessoas',
-  votos: 20
-}] */
-
-// Chamando a função para plotar o gráfico de linha com os dados
-// plotarGraficoRosca(dados);
-// Chamando a função para plotar o gráfico de barra com os dados
-// plotarGraficoBarra(dados)
 
 
-// Função para plotar o gráfico de rosca
-function plotarGraficoRosca(dados) {
-  console.log(dados)
 
 
-  // Separando os rótulos (labels) e os dados dos votos
-  var nomelista = [];
-  var qtdusuarioslista = [];
 
-  // Preenchendo os arrays com os dados
 
-  for (var i = 0; i < dados.length; i++) {
-    nomelista.push(dados[i].nomeperfil);
-    qtdusuarioslista.push(dados[i].QtdUsuarios);
+// Função chamada ao carregar a página
+function obterDados() {
+    fetch(`/quizlocal/contagemlocal`, { cache: 'no-store' })
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    plotarGraficolinhaa(resposta); // Chama a função com os dados
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+        });
+}
+
+// Chama a função ao carregar a página
+document.addEventListener('DOMContentLoaded', obterDados);
+
+
+
+
+
+
+
+
+
+
+// Opções do gráfico
+const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2, // Ajuste a proporção largura/altura
+    plugins: {
+        legend: {
+            position: 'top'
+        }
+    },
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+};
+
+
+
+
+
+
+
+  function tipos(){
+                            meuFormulario.style.display = "block"
+                            meuFormulario.innerHTML = ``
+                            div_resultado.innerHTML = ``
+
+                            meuFormulario.innerHTML = `
+                            
+                            
+                            <div class="div_questao"><h2>Voluntariado Social e Tecnológico: Transformando Realidades com Inovação</h2>
+O voluntariado social e tecnológico é uma forma de engajamento em que os voluntários aplicam suas habilidades tecnológicas para resolver problemas sociais. Em vez de atuar apenas em ações assistenciais tradicionais, esse modelo utiliza ferramentas digitais e inovação para ampliar o impacto, criar soluções práticas e melhorar a qualidade de vida de comunidades e indivíduos. Com a crescente transformação digital, essa modalidade de voluntariado tem se expandido rapidamente, trazendo novas oportunidades de transformação social.
+
+<h2>Exemplos Reais de Voluntariado Social e Tecnológico</h2>
+<li>TechSoup – Conectando ONGs a Tecnologias</li>
+
+O TechSoup é uma plataforma global que conecta organizações sem fins lucrativos a recursos tecnológicos, como software e hardware. Voluntários especializados em tecnologia oferecem suporte para que essas organizações possam utilizar ferramentas digitais de forma eficiente, aumentando seu impacto. Por exemplo, desenvolvedores de software ajudam ONGs a criar sistemas de gestão ou a melhorar sua presença digital.
+
+<li>Code for Good – Programação a Serviço de Causas Sociais</li>
+
+Code for Good reúne programadores para desenvolver soluções digitais para organizações sociais. Voluntários criam aplicativos, websites e sistemas de gerenciamento de dados que ajudam ONGs a gerenciar suas operações, melhorar a comunicação ou fornecer serviços essenciais, como o mapeamento de recursos de saúde para comunidades carentes.
+
+<li>Ensino Digital Solidário – Capacitação em Ferramentas de Ensino a Distância</li>
+
+Durante a pandemia de COVID-19, muitos voluntários se dedicaram a ensinar jovens em comunidades vulneráveis a usar ferramentas de ensino a distância, como Google Classroom e Zoom. Essa ação garantiu que milhares de estudantes conseguissem continuar seus estudos durante a crise, superando barreiras de acesso à educação.
+<br><img src="https://tec.mx/sites/default/files/2022-12/voluntariado.jpg">
+
+<h2>Impacto do Voluntariado Social e Tecnológico</h2>
+O voluntariado social e tecnológico oferece soluções práticas e inovadoras para problemas sociais, capacita comunidades a resolverem suas próprias dificuldades com o uso da tecnologia e amplia o impacto social de forma escalável. Ele é um exemplo claro de como as tecnologias podem ser usadas para transformar vidas e criar um futuro mais inclusivo e conectado.
+<br><br>
+</div>
+
+
+
+<br><br><br>
+<div class="div_questao">
+<h2>Voluntariado Administrativo e Logístico: Apoio Essencial para a Eficiência Social</h2>
+O voluntariado administrativo e logístico é uma forma de contribuição em que os voluntários aplicam suas habilidades de organização, gestão e suporte operacional para ajudar causas sociais a funcionarem de forma mais eficiente. Esses voluntários não estão diretamente envolvidos na assistência a indivíduos ou no trabalho de campo, mas desempenham um papel fundamental nos bastidores, permitindo que organizações sociais, ONGs e projetos comunitários operem de maneira mais eficaz.
+
+Essa modalidade de voluntariado é crucial para garantir que os recursos sejam bem geridos, os processos fluam sem obstáculos e que as iniciativas possam escalar, atingindo um número maior de pessoas. Com uma base sólida de suporte administrativo e logístico, as organizações sociais podem se concentrar mais no impacto direto de suas ações, enquanto os voluntários administrativos e logísticos cuidam de todo o processo de operação.
+
+<h2>Exemplos Reais de Voluntariado Administrativo e Logístico</h2>
+<li>Organização de Eventos e Campanhas de Arrecadação de Fundos</li>
+
+Em muitos eventos e campanhas de arrecadação de fundos, o apoio logístico e administrativo é essencial para o sucesso. Voluntários administram o cadastro de participantes, organizam espaços e horários, controlam os estoques de materiais e garantem que os recursos sejam distribuídos de maneira eficaz. Por exemplo, durante campanhas de doação de alimentos ou roupas, esses voluntários são responsáveis por coordenar a entrega e o armazenamento de doações, garantir que os voluntários de campo tenham o suporte necessário e que a comunicação entre as diferentes equipes seja clara.
+
+<li>Suporte Administrativo em ONGs e Projetos Comunitários</li>
+
+Muitas ONGs, especialmente as de menor porte, dependem de voluntários administrativos para manter suas operações diárias. Esses voluntários podem ser encarregados de tarefas como a gestão de documentos, o controle de contas, a organização de agendas e até mesmo a elaboração de relatórios. Por exemplo, voluntários administrativos podem ajudar uma ONG de educação a gerenciar as inscrições de alunos em cursos, organizar materiais didáticos ou acompanhar os dados de desempenho de alunos e doações.
+
+<li>Gestão de Logística em Programas de Emergência</li>
+
+Voluntários logísticos desempenham um papel fundamental em situações de emergência, como em desastres naturais ou crises humanitárias. Eles são responsáveis por coordenar a distribuição de alimentos, água, remédios e outros recursos essenciais para as populações afetadas. Em um exemplo recente, durante um desastre natural, voluntários logísticos organizaram os pontos de coleta e distribuição, ajudando a coordenar a equipe, controlar os estoques e garantir que as necessidades básicas fossem atendidas de maneira eficiente.
+
+<h2>Impacto do Voluntariado Administrativo e Logístico</h2>
+O trabalho administrativo e logístico tem um impacto profundo nas organizações, permitindo que elas funcionem de maneira mais fluida e sem interrupções. Ao manter os processos internos organizados, os voluntários garantem que as equipes de campo possam concentrar seus esforços diretamente no apoio às pessoas e comunidades que necessitam. O resultado é uma operação mais ágil e com maior alcance social.
+
+Benefícios para os Voluntários
+Para os voluntários, o trabalho administrativo e logístico oferece uma excelente oportunidade de desenvolver habilidades essenciais para sua carreira, como gestão de projetos, organização, resolução de problemas e comunicação. Além disso, o voluntário se sente realizado ao saber que seu trabalho nos bastidores tem um impacto direto nas ações que beneficiam a comunidade.
+
+
+<br><br><br>
+</div>
+<br><br>
+<div class="div_questao">
+<h2>Voluntariado em Causas Sociais e Ambientais: Transformando o Mundo com Ação</h2>
+O voluntariado em causas sociais e ambientais é uma forma de engajamento onde os voluntários se dedicam a ações que visam promover o bem-estar humano e a sustentabilidade ambiental. Ao unir esforços para resolver problemas como a desigualdade social, a preservação ambiental e o cuidado com os recursos naturais, esses voluntários desempenham um papel crucial na construção de um futuro mais justo e sustentável.
+
+Os voluntários em causas sociais e ambientais atuam diretamente nas comunidades, ajudando a criar soluções práticas para desafios sociais e ambientais. Seja no combate à pobreza, na promoção da educação, no apoio a populações vulneráveis ou na proteção de ecossistemas, esses voluntários são essenciais para gerar impacto positivo, tanto local quanto globalmente.
+
+<h2>Exemplos Reais de Voluntariado em Causas Sociais e Ambientais</h2>
+Apoio a Comunidades Vulneráveis: Educação e Inclusão Social
+
+Em muitas regiões carentes, voluntários se dedicam a causas sociais como a promoção da educação e o apoio a populações em situação de vulnerabilidade. Por exemplo, um voluntário pode ensinar crianças em comunidades de favelas ou apoiar iniciativas de inclusão social para pessoas com deficiência. Um exemplo prático é o Programa Educacional Voluntário, que leva professores e tutores voluntários a comunidades de baixa renda, oferecendo aulas gratuitas de reforço escolar, alfabetização e cursos de capacitação profissional.
+
+Ações de Preservação Ambiental: Plantio de Árvores e Limpeza de Praias
+
+Na área ambiental, voluntários têm se dedicado a ações de preservação e recuperação de ecossistemas. Um exemplo clássico é o plantio de árvores em áreas degradadas, que ajuda na recomposição da vegetação e na captura de carbono. Organizações como o Projeto Tamar, que protege tartarugas marinhas, dependem de voluntários para monitorar as praias, limpar o ambiente e educar as comunidades locais sobre a importância da preservação da biodiversidade marinha. Esses voluntários, além de contribuir para a saúde do planeta, também educam e sensibilizam a população sobre questões ambientais urgentes.
+
+Campanhas de Conscientização e Ação Climática
+
+Voluntários engajados em causas sociais e ambientais frequentemente participam de campanhas de conscientização sobre mudanças climáticas e preservação dos recursos naturais. No Dia da Terra, por exemplo, voluntários se unem a movimentos globais para organizar eventos educativos, protestos pacíficos e atividades para promover a redução de resíduos, o consumo sustentável e a proteção dos ecossistemas. Um exemplo disso é a Greta Thunberg e o movimento Fridays for Future, onde jovens de todo o mundo se unem para exigir ação imediata contra as mudanças climáticas, e muitos voluntários contribuem com a organização e divulgação das atividades.
+<br>
+<img src="https://www.greenpeace.org/static/planet4-brasil-stateless/2019/12/c23e9ea7-bras%C3%ADlia-isadora-lima-rodrigues--scaled.jpg">
+
+<h2>Impacto do Voluntariado em Causas Sociais e Ambientais</h2>
+O voluntariado em causas sociais e ambientais tem um impacto profundo e multifacetado. Nas causas sociais, ele ajuda a combater a desigualdade, a promover a educação e a inclusão e a criar uma rede de apoio para aqueles que mais precisam. No campo ambiental, os voluntários trabalham para preservar recursos naturais, restaurar ecossistemas e garantir que as futuras gerações herdem um planeta mais saudável. Esses voluntários desempenham um papel vital na conscientização pública e na criação de soluções práticas para problemas globais.
+
+<h2>Benefícios para os Voluntários</h2>
+Para os voluntários, essa atuação oferece uma experiência enriquecedora, permitindo o desenvolvimento de habilidades como trabalho em equipe, liderança, gestão de projetos ambientais e sociais e sensibilização comunitária. Além disso, o sentimento de realização pessoal ao contribuir para causas maiores, como a justiça social e a preservação ambiental, fortalece o compromisso e o desejo de continuar fazendo a diferença no mundo.
+
+Ao engajar-se em causas sociais e ambientais, os voluntários não só ajudam a transformar a realidade ao seu redor, mas também criam um legado duradouro de ação e mudança, promovendo um mundo mais justo, equitativo e sustentável para as gerações futuras.
+
+
+
+
+<br>
+
+</div>
+<br><br>
+<div class="div_questao">
+<h2>Voluntariado de Apoio Direto às Pessoas: Transformando Vidas Através do Cuidado e Compromisso</h2>
+O voluntariado de apoio direto às pessoas é uma das formas mais próximas e impactantes de engajamento social. Neste modelo, os voluntários se envolvem diretamente com indivíduos ou grupos que precisam de suporte, proporcionando assistência em várias áreas, como saúde, educação, apoio psicológico, assistência social e cuidados pessoais. Esse tipo de voluntariado não se limita apenas a ações de suporte básico, mas também envolve o acolhimento, a escuta ativa e o fortalecimento da dignidade humana, promovendo o bem-estar das pessoas de forma imediata e significativa.
+
+Esse trabalho de apoio direto é vital, pois muitas vezes é nas pequenas ações, como uma conversa amiga, um acompanhamento na busca de direitos ou uma ajuda em tarefas cotidianas, que se criam grandes transformações nas vidas de quem recebe o apoio. O voluntário, ao oferecer seu tempo, habilidades e empatia, contribui para que muitas pessoas consigam superar desafios diários e encontrem novos caminhos para melhorar sua qualidade de vida.
+
+<h2>Exemplos Reais de Voluntariado de Apoio Direto às Pessoas</h2>
+Apoio a Pessoas em Situação de Rua
+
+Voluntários que atuam com pessoas em situação de rua frequentemente se dedicam a tarefas como fornecer refeições, roupas, produtos de higiene e, o mais importante, oferecer apoio emocional. Organizações como Cozinha Comunitária e SOS Amigo, em diversas cidades, contam com a ajuda de voluntários para entregar alimentos, criar campanhas de arrecadação e fornecer um acolhimento mais humano, ouvindo as histórias dessas pessoas e oferecendo ajuda para reintegração social ou acesso a serviços de saúde e moradia.
+
+Apoio a Crianças e Adolescentes em Situação de Vulnerabilidade
+
+Muitos voluntários dedicam-se ao apoio direto de crianças e adolescentes em situação de vulnerabilidade social, oferecendo tutoria escolar, atividades de lazer e, em muitos casos, programas de mentoria. Por exemplo, o programa Criança Esperança, apoiado por várias ONGs, inclui voluntários que ajudam no desenvolvimento educacional de jovens em comunidades carentes, orientando-os para a realização de sonhos e para a quebra do ciclo da pobreza.
+
+Acompanhamento de Pacientes em Tratamento de Doenças Crônicas ou Terminais
+
+No campo da saúde, o voluntariado de apoio direto às pessoas pode ser essencial para pacientes em tratamento de doenças crônicas ou terminais. Voluntários em organizações como Hospitais de Câncer e Cuidados Paliativos frequentemente oferecem não apenas apoio logístico, como transporte ou alimentação, mas também apoio emocional e psicológico, ajudando os pacientes e suas famílias a lidarem com a dor física e emocional. Além disso, alguns voluntários atuam oferecendo companheirismo, fazendo visitas a hospitais ou lares de idosos, proporcionando momentos de descontração e conversa.
+
+<br><img src="https://f.i.uol.com.br/fotografia/2021/07/28/16275167476101ef4b36b10_1627516747_3x2_rt.jpg">
+<h2>Impacto do Voluntariado de Apoio Direto às Pessoas</h2>
+O impacto desse tipo de voluntariado vai muito além das ações imediatas de ajuda. Ao apoiar diretamente as pessoas, os voluntários proporcionam um sentimento de dignidade e acolhimento aos que mais precisam. Para aqueles em situação de vulnerabilidade, receber atenção individualizada muitas vezes é a chave para que se sintam valorizados e motivados a buscar soluções para suas próprias dificuldades.
+
+Além disso, o voluntariado de apoio direto tem um efeito positivo nas comunidades como um todo, criando redes de solidariedade e aumentando a coesão social. Essas ações contribuem para a redução da exclusão social e para o fortalecimento de vínculos de confiança e apoio mútuo entre indivíduos, grupos e instituições.
+
+<h2>Benefícios para os Voluntários</h2>
+Para os voluntários, o apoio direto às pessoas oferece uma experiência profundamente gratificante, com conexões emocionais fortes e um senso de realização pessoal ao ver o impacto de suas ações no dia a dia de alguém. O voluntário também pode desenvolver habilidades essenciais, como escuta ativa, empatia, gestão de conflitos e comunicação interpessoal. Muitos relatam que a experiência de voluntariado, especialmente quando envolve contato direto com quem precisa de ajuda, amplia sua compreensão sobre as realidades de outros e fortalece seu compromisso com causas sociais.
+
+Ao atuar diretamente no auxílio às pessoas, os voluntários não só transformam as vidas de quem recebem a ajuda, mas também ampliam seu próprio entendimento sobre solidariedade, generosidade e o impacto que pequenas ações podem ter no bem-estar coletivo.
+</div>
+`
+
+
+
   }
 
-  // Capturando o elemento canvas pelo id 
-  var idgrafico = rosca;
-  // Criando o gráfico de linha usando o Chart.js
-  var myChart = new Chart(idgrafico, {
-    type: 'doughnut', // Tipo de gráfico: linha
-    data: { // Dados para o gráfico
-      labels: nomelista, // Rótulos no eixo X
-      datasets: [{
-        label: 'Votos', // Nome do conjunto de dados
-        data: qtdusuarioslista, // Dados dos votos
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)',
-          'rgb(153, 102, 255)' // Cor de fundo das linhas
-        ],
-        borderColor: [
-          'rgba(255, 255, 255, 0)', // Cor da borda das linhas
-        ],
-        borderWidth: 1 // Largura da borda das linhas
-      }]
-    },
-  });
-}
 
-// Função para plotar o gráfico de barra
-function plotarGraficoBarra(dados) {
 
-  var votos = [];
-  var tipos = [];
 
-  // Preenchendo os arrays com os dados
-  for (var i = 0; i < dados.length; i++) {
-    votos.push(dados[i].votos);
-    tipos.push(dados[i].tipo);
+  // Função chamada ao carregar a página para obter e processar os dados
+  function obterDados() {
+    // Aqui seria a função que obteria os dados do banco de dados
+    // No caso, aqui você colocaria o fetch que teria o endereço da sua rota que você criou na pasta /routes e chamaria a função plotarGraficoRosca nessa função. Exemplo:
+
+    fetch(`/quiztipos/contagem`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+          plotarGraficoRosca(resposta);
+          gerarkpiperfilpredominante(resposta);
+
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+
+
+
+
+    // Aqui seria a função que obteria os dados do banco de dados
+    // No caso, aqui você colocaria o fetch que teria o endereço da sua rota que você criou na pasta /routes e chamaria a função plotarGraficoRosca nessa função. Exemplo:
+
+    fetch(`/quizlocal/contagemlocal`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+          plotarGraficoBarra(resposta);
+         // gerarkpiperfilpredominante(resposta);
+
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
   }
 
-  // Capturando o elemento canvas pelo id 
-  var ctx = document.getElementById('barra').getContext('2d');
-  // Criando o gráfico de barra usando o Chart.js
-  var myChart = new Chart(ctx, {
-    type: 'bar', // Tipo de gráfico: barra
-    data: { // Dados para o gráfico
-      labels: tipos, // Rótulos no eixo X
-      datasets: [{
-        label: 'Votos', // Nome do conjunto de dados
-        data: votos, // Dados dos votos
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 205, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)' // Cor de fundo das barras
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)' // Cor da borda das barras
-        ],
-        borderWidth: 1 // Largura da borda das barras
-      }]
-    },
-  });
-}
 
 
-function gerarkpiperfilpredominante(dados) {
-var nomeperfilpredominante = dados[0].nomeperfil 
 
 
-p_kpium.innerHTML = `${nomeperfilpredominante}`
-}
+
+
+
+
+
+
+
+
+
+  // Como eu não configurei as rotas, eu criei um array com os dados para simular a obtenção dos dados
+  // var dados = [{
+  //  tipo: 'Voluntário Social e Tecnológico',
+  /*  votos: 10
+  },
+  {
+    tipo: 'Voluntário Administrativo e Logístico',
+    votos: 5
+  },
+  {
+    tipo: 'Voluntário em Causas Sociais e Ambientais',
+    votos: 15
+  },
+  {
+    tipo: 'Voluntário de Apoio Direto às Pessoas',
+    votos: 20
+  }] */
+
+  // Chamando a função para plotar o gráfico de linha com os dados
+  // plotarGraficoRosca(dados);
+  // Chamando a função para plotar o gráfico de barra com os dados
+  // plotarGraficoBarra(dados)
+
+
+  // Função para plotar o gráfico de rosca
+  function plotarGraficoRosca(dados) {
+    console.log(dados)
+
+
+    // Separando os rótulos (labels) e os dados dos votos
+    var nomelista = [];
+    var qtdusuarioslista = [];
+
+    // Preenchendo os arrays com os dados
+
+    for (var i = 0; i < dados.length; i++) {
+      nomelista.push(dados[i].nomeperfil);
+      qtdusuarioslista.push(dados[i].QtdUsuarios);
+    }
+
+    // Capturando o elemento canvas pelo id 
+    var idgrafico = rosca;
+
+    
+    // Criando o gráfico de linha usando o Chart.js
+    var myChart = new Chart(idgrafico, {
+      type: 'doughnut', // Tipo de gráfico: linha
+      data: { // Dados para o gráfico
+        labels: nomelista, // Rótulos no eixo X
+        datasets: [{
+          label: 'Votos', // Nome do conjunto de dados
+          data: qtdusuarioslista, // Dados dos votos
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(153, 102, 255)' // Cor de fundo das linhas
+          ],
+          borderColor: [
+            'rgba(255, 255, 255, 0)', // Cor da borda das linhas
+          ],
+          borderWidth: 1 // Largura da borda das linhas
+        }]
+      },
+
+
+
+
+
+      options: {
+        responsive: true, // Mantém o gráfico responsivo
+        maintainAspectRatio: true, // Mantém a proporção
+        aspectRatio: 3.3 // Controla a proporção largura/altura
+    }
+
+
+
+
+
+
+    });
+
+    
+  }
+
+
+
+  
+
+  // Função para plotar o gráfico de barra
+  function plotarGraficoBarra(dados) {
+
+    var votos = [];
+    var estados = [];
+
+    // Preenchendo os arrays com os dados
+    for (var i = 0; i < dados.length; i++) {
+      votos.push(dados[i].QtdUsuarios);
+      estados.push(dados[i].estado);
+    }
+
+    // Capturando o elemento canvas pelo id 
+    
+    var ctx = document.getElementById('barra').getContext('2d');
+    // Criando o gráfico de barra usando o Chart.js
+    var myChart = new Chart(ctx, {
+      type: 'bar', // Tipo de gráfico: barra
+      data: { // Dados para o gráfico
+        labels: estados, // Rótulos no eixo X
+        datasets: [{
+          label: 'Quantidade de Usuários', // Nome do conjunto de dados
+          data: votos, // Dados dos votos
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)' // Cor de fundo das barras
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)' // Cor da borda das barras
+          ],
+          borderWidth: 1 // Largura da borda das barras
+        }]
+      },
+    });
+  }
+
+
+  function gerarkpiperfilpredominante(dados) {
+    var nomeperfilpredominante = dados[0].nomeperfil
+
+
+    p_kpium.innerHTML = `${nomeperfilpredominante}`
+  }
+
+
+  function carregarPerfil() {
+    console.log("Função carregarPerfil foi chamada");
+    const usuarioID = sessionStorage.getItem('ID_USUARIO');
+
+    if (!usuarioID) {
+      console.error("ID do usuário não encontrado no sessionStorage.");
+      document.getElementById('user-profile').innerText = "ID do usuário não definido.";
+      return;
+    }
+
+    fetch(`/usuarios/perfil?id=${usuarioID}`)
+      .then((res) => {
+        console.log("Resposta da API:", res);
+        if (res.ok) {
+          return res.json();
+        } else {
+          document.getElementById('user-profile').innerText = "Você ainda não fez o Quiz de Perfil.";
+          throw new Error(`Erro na API: ${res.status}`);
+        }
+      })
+      .then((dados) => {
+        console.log("Dados recebidos:", dados);
+        if (dados && dados.nomeperfil) {
+          document.getElementById('user-profile').innerHTML = `${dados.nomeperfil}. <br>
+                `;
+
+        } else {
+          document.getElementById('user-profile').innerText = "Você ainda não realizou o Quiz de Perfil.";
+        }
+      })
+      .catch((erro) => {
+        console.error("Erro na solicitação:", erro);
+        document.getElementById('user-profile').innerText = "Você ainda não fez o Quiz de Perfil.";
+      });
+  }
 
 </script>
-    
-
-
-    
