@@ -22,6 +22,12 @@ h1 {
   color: #6883BA
 }
 
+.img_sobremim{
+  width: 200px;
+  max-height: 200px;
+  overflow: hidden;
+  object-fit: cover;
+}
 
 .container {
   display: flex;
@@ -36,7 +42,6 @@ h1 {
 
 
 .sobremim {
-  display: flex;
   width: 80%;
   margin: auto;
   text-align: flex-start;
@@ -231,7 +236,7 @@ h2 {
 /* BANNER */
 
 .banner {
-  height: 450px;
+  height: 1000px;
   color: black;
   background-image: url('../assets/imgs/inicio.png');
   background-size: cover;
@@ -267,7 +272,7 @@ h2 {
 /* BANNER */
 
 .bannerdois {
-  height: 450px;
+  height: 1000px;
   color: black;
   background-image: url('../assets/imgs/inicio2.png');
   background-size: cover;
@@ -555,6 +560,7 @@ transition: opacity 1s ease, transform 1s ease, filter 1s ease; /* Transição s
 .carousel-container {
   position: relative;
   width: 100%; /* Ajuste conforme necessário */
+  height: 1000px;
   margin: auto;
   overflow: hidden; /* Esconde o conteúdo extra */
 }
@@ -599,6 +605,61 @@ transition: opacity 1s ease, transform 1s ease, filter 1s ease; /* Transição s
 }
 
 
+
+/*  carrossel de baixo */
+
+/* Contêiner do slider */
+.slider-container {
+  position: relative;
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
+
+/* Área deslizante */
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Faixa que contém os itens */
+.slider-track {
+  display: flex;
+}
+
+/* Cada slide */
+.slider-item {
+  flex: 0 0 100%;
+  text-align: center;
+  background-color: #e0e0e0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Botões de navegação */
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.slider-button.prev {
+  left: 10px;
+}
+
+.slider-button.next {
+  right: 10px;
+}
+
+.slider-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
 
 

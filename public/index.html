@@ -73,23 +73,6 @@
 
 
 
-  <div class="banner">
-
-    <div class="container">
-      <p>Rede <span>solidária</span></p>
-    </div>
-  </div>
-
-  <div class="bannerdois">
-    <div class="container">
-      <div class="containercomfundo">
-      <p>Comece um trabalho voluntário.
-      Encontre formas de engajar ativamente e conheça mais sobre as áreas existentes. </p></div><div class="div_botao">
-      <a href="quiz.html"> <button class="button">Quero descobrir meu perfil!</button></a></div>
-    
-    </div>
-  </div>
-
 <div class="citacao escondido"> <img src="../assets/imgs/abreaspas.png" style="width: 100px;"> O voluntariado é como uma tela em branco, onde cada ato de bondade pinta um futuro melhor. <img src="../assets/imgs/fechaspas.png" style="width: 100px;"></div>
 
 
@@ -260,7 +243,28 @@ Dê o primeiro passo hoje e torne-se parte de algo maior. Descubra o impacto que
     <p><img src="assets/imgs/passoapasso.png"></p>
   </div>
 
+
+
   <div class="testedois escondido">
+
+
+    <div class="slider-container">
+      <button class="slider-button prev" onclick="moveSlider(-1)">&#10094;</button>
+    
+      <div class="slider-wrapper">
+        <div class="slider-track">
+          <div class="slider-item"><p>Slide 1</p></div>
+          <div class="slider-item"><p>Slide 2</p></div>
+          <div class="slider-item"><p>Slide 3</p></div>
+        </div>
+      </div>
+    
+      <button class="slider-button next" onclick="moveSlider(1)">&#10095;</button>
+    </div>
+    
+  
+  
+  
     <h2>Histórias Inspiradoras</h2>
     <p>Patch Adams, nascido Hunter Doherty Adams em 1945, é uma figura que redefine o que significa cuidar de alguém. Sua jornada foi profundamente marcada por uma infância cheia de desafios e tragédias. Quando tinha 16 anos, ele perdeu o pai, que morreu de um ataque cardíaco após servir na guerra da Coreia. A morte precoce do pai abalou profundamente Patch, deixando-o sem direção e o empurrando para uma espiral de depressão.
 
@@ -488,12 +492,39 @@ function moveCarousel(direction) {
   slide.style.transform = `translateX(-${currentIndex * 100}%)`;
 
 
-  setInterval(() => moveCarousel(1), 10000); // Move para o próximo item a cada 3 segundos
 
 
 }
+setInterval(() => moveCarousel(1), 10000); // Move para o próximo item a cada 3 segundos
 
 
+
+
+
+
+
+let sliderIndex = 0;
+
+function moveSlider(direction) {
+  const track = document.querySelector('.slider-track');
+  const items = document.querySelectorAll('.slider-item');
+
+  // Atualiza o índice
+  sliderIndex += direction;
+
+  // Mantém o índice dentro dos limites
+  if (sliderIndex < 0) {
+    sliderIndex = items.length - 1; // Vai para o último slide
+  } else if (sliderIndex >= items.length) {
+    sliderIndex = 0; // Volta ao primeiro slide
+  }
+
+  // Move o slider
+  track.style.transform = `translateX(-${sliderIndex * 100}%)`;
+}
+
+// Configuração automática
+setInterval(() => moveSlider(1), 8000); // Move para o próximo slide a cada 8 segundos
 
 
 

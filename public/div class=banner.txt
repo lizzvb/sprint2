@@ -1,0 +1,17 @@
+  <div class="banner">
+
+    <div class="container">
+      <p>Rede <span>solidária</span></p>
+    </div>
+  </div>
+
+  <div class="bannerdois">
+    <div class="container">
+      <div class="containercomfundo">
+      <p>Comece um trabalho voluntário.
+      Encontre formas de engajar ativamente e conheça mais sobre as áreas existentes. </p></div><div class="div_botao">
+      <a href="quiz.html"> <button class="button">Quero descobrir meu perfil!</button></a></div>
+    
+    </div>
+  </div>
+
