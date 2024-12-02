@@ -10,7 +10,7 @@ router.put("/cadastrar", function (req, res) {
 
 // posso dar o nome q quiser
 router.get("/contagemdesafio", function (req, res) { 
-    quizdesafioController.contarDesafio(req, res);
+    quizdesafioController.contagemDesafio(req, res);
 })
 
 module.exports = router;

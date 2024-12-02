@@ -232,7 +232,7 @@ h2 {
 
 .banner {
   height: 450px;
-  color: #B0E298;
+  color: black;
   background-image: url('../assets/imgs/inicio.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -268,7 +268,7 @@ h2 {
 
 .bannerdois {
   height: 450px;
-  color: #B0E298;
+  color: black;
   background-image: url('../assets/imgs/inicio2.png');
   background-size: cover;
   width: 100%;
@@ -278,10 +278,11 @@ h2 {
   background-position: center;
   background-attachment: fixed;
   opacity: 0.8;
+
 }
 
 .bannerdois .container {
-  justify-content: center;
+  
   align-items: center;
   height: 100%;
 }
@@ -295,11 +296,22 @@ h2 {
   text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
+.containercomfundo{
+  text-align: center;
+  background-color: white;
+  width: 600px;
+  height: 400px;
+  border-radius: 10%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 .bannerdois .container span {
   font-weight: 800;
 }
 
-
+.bannerdois .container .div_botao { 
+  margin-left: 250px;
+}
 
 
 
@@ -325,7 +337,8 @@ h2 {
 
 .definicao{
   text-align: center;
-  
+  margin-left: 350px;
+  width: 1000px;
 
 opacity: 0; /* Começa invisível */ transform: translateY(20px); /* Ligeiramente deslocada para baixo */ transition: opacity 1s ease, transform 1s ease, filter 1s ease;/* Transição suave */
 filter: blur(40px); /* Inicia com desfoque */
@@ -539,6 +552,51 @@ transition: opacity 1s ease, transform 1s ease, filter 1s ease; /* Transição s
 }
 
 
+.carousel-container {
+  position: relative;
+  width: 100%; /* Ajuste conforme necessário */
+  margin: auto;
+  overflow: hidden; /* Esconde o conteúdo extra */
+}
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out; /* Suaviza o movimento */
+}
+
+.carousel-slide {
+  display: flex;
+  width: 100%;
+}
+
+.carousel-item {
+  flex: 0 0 100%; /* Cada item ocupa 100% do contêiner */
+  box-sizing: border-box;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
 
 

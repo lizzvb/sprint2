@@ -8,6 +8,12 @@ body {
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.img_tipo {
+width: 1000px;
+
+}
+
+
 .label-captura {
   display: flex;
   justify-content: center;
@@ -245,6 +251,23 @@ flex-wrap: wrap
   padding: 10px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
+
+
+
+
+.flex-colunar {
+  display: flex;
+  flex-direction: column ;
+  
+
+}
+
+
+
+
+
+
+
 
 
 .cards {

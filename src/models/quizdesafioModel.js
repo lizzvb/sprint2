@@ -9,26 +9,26 @@ function cadastrarDesafio(idusuario, pontuacao ) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-UPDATE quiz set = ${pontuacao} where id = ${idusuario};
+UPDATE usuario
+SET fk_quiz = ${pontuacao}
+WHERE usuario.id = ${idusuario};
 
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function contarDesafio () {
+function contagemDesafio () {
     var instrucaoSql = `SELECT 
-    q.idquiz,
-    q.pontuacao,
-    COUNT(u.id) AS QtdUsuarios
+    u.nome AS NomeUsuario,
+    q.pontuacao AS Pontuacao
 FROM 
     usuario u
 JOIN 
     quiz q ON u.fk_quiz = q.idquiz
-GROUP BY 
-    q.idquiz, q.pontuacao
 ORDER BY 
-    q.pontuacao DESC, QtdUsuarios DESC;
+    q.pontuacao DESC;
+
 
 `;
 return database.executar(instrucaoSql);
@@ -40,5 +40,5 @@ return database.executar(instrucaoSql);
 
 module.exports = {
     cadastrarDesafio,
-    contarDesafio
+    contagemDesafio
 };

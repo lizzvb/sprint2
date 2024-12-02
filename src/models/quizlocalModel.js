@@ -22,27 +22,17 @@ function cadastrarLocal(idusuario, numeroregiao, estado ) {
     return database.executar(instrucaoRegiao)
         .then(() => database.executar(instrucaoEstado));
 
-}
+}function contarLocal() {
+    const instrucao = `
+    SELECT e.estado, r.regiaobrasil AS regiao, COUNT(u.id) AS QtdUsuarios
+    FROM usuario u
+    JOIN estado e ON u.fk_estado = e.idestado
+    JOIN questionarioregiao r ON u.fk_questionarioregiao = r.idlocal
+    GROUP BY e.estado, r.regiaobrasil
+    ORDER BY QtdUsuarios DESC;
+    `;
 
-function contarLocal () {
-    var instrucaoRegiao = `
-    SELECT r.regiaobrasil, COUNT(u.id) AS 'Quantidade de Usuários'
-FROM usuario u
-JOIN questionarioregiao r ON u.fk_questionarioregiao = r.idlocal
-GROUP BY r.idlocal;`
-
-   var instrucaoEstado = `SELECT e.estado, COUNT(u.id) AS 'QtdUsuarios'
-FROM usuario u
-JOIN estado e ON u.fk_estado = e.idestado 
-GROUP BY e.idestado ORDER BY COUNT(u.id) DESC;
-
-
-
-
-
- `;
- return database.executar(instrucaoRegiao)
-        .then(() => database.executar(instrucaoEstado));
+    return database.executar(instrucao);
 }
 
 

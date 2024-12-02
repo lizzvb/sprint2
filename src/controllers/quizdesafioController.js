@@ -29,8 +29,8 @@ function cadastrarDesafio(req, res) {
 }
 
 
- function contarDesafio(req, res) {
-    quizdesafioModel.contarDesafio().then(function (resultado) {
+ function contagemDesafio(req, res) {
+    quizdesafioModel.contagemDesafio().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -45,5 +45,5 @@ function cadastrarDesafio(req, res) {
 
 module.exports = {
     cadastrarDesafio,
-    contarDesafio
+    contagemDesafio
 }

@@ -25,13 +25,9 @@
   <!--FONT AWESOME-->
   <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
 </head>
-<style>#rosca {
-  width: 200px;
-  height: 200px;
-}
-</style>
 
-<body onload="obterDados(), carregarPerfil()">
+
+<body onload="obterDados(), obterDadosLocal(), obterDadosQuiz(), carregarPerfil()">
 
 
 
@@ -85,20 +81,20 @@
             <p id="p_kpium"></p>
           </div>
           <div class="item-regua alerta-frio">
-            <p>Local do Brasil com maior taxa de usuários:</p>
-            <p>&lt;=10°C</p>
+            <p>Região do Brasil com maior taxa de usuários:</p>
+            <p id="p_kpitres"></p>
           </div>
           <div class="item-regua ideal">
             <p>Estado predominante entre os usuários:</p>
-            <p>20°C</p>
+            <p id="p_kpidois"></p>
           </div>
           <div class="item-regua alerta-quente">
-            <p>Tempo médio dos usuários gasto no Quiz Desafio:</p>
-            <p>&gt;=22°C</p>
+            <p>Nome do maior colocado no Quiz Desafio:</p>
+            <p id="p_kpiquatro"></p>
           </div>
           <div class="item-regua perigo-quente">
             <p>Maior pontuação no Quiz Desafio:</p>
-            <p>&gt;=23°C</p>
+            <p id="p_kpicinco"></p>
           </div>
         </div>
       </div><br><br>
@@ -106,22 +102,22 @@
       <div class="div_grande">
         <!-- Elemento canvas onde o gráfico de linha será desenhado -->
          <div class="div_canvas">
-         <center><h2>Tipos de Perfil de Voluntariado</h2></center>
-        <canvas id="rosca"></canvas></div>
+         <div class="div_grafico"><center><h2>Tipos de Perfil de Voluntariado</h2></center>
+        <canvas id="rosca"></canvas></div></div>
 
         <!-- Elemento canvas onde o gráfico de barra será desenhado -->
         <div class="div_canvas">
-         <center> <h2>Maiores Pontuações no Quiz</h2></center>
-        <canvas id="barra"></canvas></div>
+          <div class="div_grafico"> <center> <h2>Maiores Pontuações no Quiz</h2></center>
+        <canvas id="barra"></canvas></div></div>
 
         <div class="div_canvas">
-          <center>  <h2>Locais do Brasil dos usuários</h2></center>
-          <canvas id="linhaa"></canvas></div>
+          <div class="div_grafico"><center>  <h2>Locais do Brasil dos usuários</h2></center>
+          <canvas id="pizzalocal"></canvas></div></div>
   
 
         <div class="div_canvas">
-        <center>  <h2>Estados dos Usuários</h2></center>
-        <canvas id="linhaa"></canvas></div>
+          <div class="div_grafico"><center>  <h2>Estados dos Usuários</h2></center>
+        <canvas id="pizzaestado"></canvas></div></div>
 
       </div>
 
@@ -137,46 +133,20 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
 
+  function plotarGraficopizzaestado(dados) {
+    const votos = dados.map(dado => dado.QtdUsuarios);
+    const estados = dados.map(dado => dado.estado);
 
-  function plotarGraficolinhaa(dados) {
-    // Verifica se os dados estão no formato correto
-    if (!Array.isArray(dados) || dados.length === 0) {
-        console.error("Os dados fornecidos para o gráfico estão vazios ou no formato errado:", dados);
-        return;
-    }
-
-    var votos = [];
-    var estados = [];
-
-    // Preenchendo os arrays com os dados
-    for (var i = 0; i < dados.length; i++) {
-        if (dados[i].QtdUsuarios !== undefined && dados[i].estado !== undefined) {
-            votos.push(dados[i].QtdUsuarios);
-            estados.push(dados[i].estado);
-        } else {
-            console.error(`Dados incompletos na posição ${i}:`, dados[i]);
-        }
-    }
-
-    console.log("Estados:", estados); // Debug
-    console.log("Votos:", votos);     // Debug
-
-    const ctxlinha = document.getElementById('linhaa')?.getContext('2d');
-    if (!ctxlinha) {
-        console.error("Canvas 'linhaa' não encontrado.");
-        return;
-    }
-
-    // Inicializa o gráfico de linha
-    new Chart(ctxlinha, {
+    const ctx = document.getElementById('pizzaestado').getContext('2d');
+    new Chart(ctx, {
         type: 'line',
         data: {
-            labels: estados, // Rótulos do eixo X
+            labels: estados,
             datasets: [{
                 label: 'Usuários por Estado',
-                data: votos, // Dados do eixo Y
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                data: votos,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 tension: 0.4
             }]
         },
@@ -184,7 +154,7 @@
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true // Começa no zero
+                    beginAtZero: true
                 }
             }
         }
@@ -195,27 +165,27 @@
 
 
 
-
 // Função chamada ao carregar a página
-function obterDados() {
+function obterDadosLocal() {
     fetch(`/quizlocal/contagemlocal`, { cache: 'no-store' })
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    plotarGraficolinhaa(resposta); // Chama a função com os dados
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
+        .then(response => response.json())
+        .then(dados => {
+            console.log("Dados recebidos:", dados);
+
+
+            gerarkpiestadopredominante(dados);
+
+            // Dados para 'pizzaestado' (Estados)
+            plotarGraficopizzaestado(dados);
+            
+          
+            // Dados para 'pizzalocal' (Regiões)
+            plotarGraficopizzalocal(dados);
         })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-        });
+        .catch(error => console.error("Erro ao buscar dados para os gráficos:", error));
 }
 
-// Chama a função ao carregar a página
-document.addEventListener('DOMContentLoaded', obterDados);
+
 
 
 
@@ -415,12 +385,64 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
     // Aqui seria a função que obteria os dados do banco de dados
     // No caso, aqui você colocaria o fetch que teria o endereço da sua rota que você criou na pasta /routes e chamaria a função plotarGraficoRosca nessa função. Exemplo:
 
+
+
+
+
+// Função para plotar o gráfico de barra
+function plotarGraficoLinha(dados) {
+
+var votos = [];
+var estados = [];
+
+// Preenchendo os arrays com os dados
+for (var i = 0; i < dados.length; i++) {
+  votos.push(dados[i].QtdUsuarios);
+  estados.push(dados[i].estado);
+}
+
+// Capturando o elemento canvas pelo id 
+
+var ctx = document.getElementById('pizzaestado').getContext('2d');
+// Criando o gráfico de barra usando o Chart.js
+var myChart = new Chart(ctx, {
+  type: 'line', // Tipo de gráfico: barra
+  data: { // Dados para o gráfico
+    labels: estados, // Rótulos no eixo X
+    datasets: [{
+      label: 'Quantidade de Usuários', // Nome do conjunto de dados
+      data: votos, // Dados dos votos
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)' // Cor de fundo das barras
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)' // Cor da borda das barras
+      ],
+      borderWidth: 1 // Largura da borda das barras
+    }]
+  },
+});
+}
+
+
     fetch(`/quizlocal/contagemlocal`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-          plotarGraficoBarra(resposta);
+          plotarGraficoLinha(resposta);
          // gerarkpiperfilpredominante(resposta);
 
 
@@ -433,6 +455,7 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
   }
+
 
 
 
@@ -519,7 +542,7 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
       options: {
         responsive: true, // Mantém o gráfico responsivo
         maintainAspectRatio: true, // Mantém a proporção
-        aspectRatio: 3.3 // Controla a proporção largura/altura
+        aspectRatio: 2.0 // Controla a proporção largura/altura
     }
 
 
@@ -529,8 +552,97 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
 
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
   }
+
+
+
+  function plotarGraficopizzalocal(dados) {
+    const regioesMap = {};
+
+    // Agrupando os dados por região
+    dados.forEach(dado => {
+        const regiao = dado.regiao;
+        if (!regioesMap[regiao]) {
+            regioesMap[regiao] = 0;
+        }
+        regioesMap[regiao] += dado.QtdUsuarios;
+    });
+
+    // Convertendo o objeto para arrays
+    const regioes = Object.keys(regioesMap);
+    const votos = Object.values(regioesMap);
+
+    const ctx = document.getElementById('pizzalocal').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: regioes,
+            datasets: [{
+                label: 'Usuários por Região',
+                data: votos,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+
+fetch(`/quizlocal/contagemlocal`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+          plotarGraficopizzalocal(resposta);
+         // gerarkpiperfilpredominante(resposta);
+
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -539,13 +651,13 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
   // Função para plotar o gráfico de barra
   function plotarGraficoBarra(dados) {
 
-    var votos = [];
-    var estados = [];
+    var NomeUsuario = [];
+    var Pontuacao = [];
 
     // Preenchendo os arrays com os dados
     for (var i = 0; i < dados.length; i++) {
-      votos.push(dados[i].QtdUsuarios);
-      estados.push(dados[i].estado);
+      NomeUsuario.push(dados[i].NomeUsuario);
+      Pontuacao.push(dados[i].Pontuacao);
     }
 
     // Capturando o elemento canvas pelo id 
@@ -555,10 +667,10 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
     var myChart = new Chart(ctx, {
       type: 'bar', // Tipo de gráfico: barra
       data: { // Dados para o gráfico
-        labels: estados, // Rótulos no eixo X
+        labels: NomeUsuario, // Rótulos no eixo X
         datasets: [{
-          label: 'Quantidade de Usuários', // Nome do conjunto de dados
-          data: votos, // Dados dos votos
+          label: 'Maiores Pontuações', // Nome do conjunto de dados
+          data: Pontuacao, // Dados dos votos
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)',
@@ -581,7 +693,28 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
         }]
       },
     });
+
+
   }
+    function obterDadosQuiz() {
+      
+    fetch('/quizdesafio/contagemdesafio', { cache: 'no-store' })
+        .then(response => response.json())
+        .then(dados => {
+            console.log("Dados recebidos para maiores pontuações:", dados);
+            plotarGraficoBarra(dados); // Chama a função de plotagem
+            gerarkpiusuariomaiorpontuacao(dados);
+            gerarkpimaiorpontuacao(dados);
+        })
+        .catch(error => console.error("Erro ao buscar dados do quiz:", error));
+}
+
+
+
+
+
+
+  
 
 
   function gerarkpiperfilpredominante(dados) {
@@ -590,6 +723,35 @@ Ao atuar diretamente no auxílio às pessoas, os voluntários não só transform
 
     p_kpium.innerHTML = `${nomeperfilpredominante}`
   }
+
+  function gerarkpiestadopredominante(dados) {
+    var nomeestadopredominante = dados[0].estado
+    var nomeregiaopredominante = dados[0].regiao
+
+
+    p_kpidois.innerHTML = `${nomeestadopredominante}`
+    p_kpitres.innerHTML = `${nomeregiaopredominante}`
+
+  }
+
+
+  function gerarkpiusuariomaiorpontuacao(dados) {
+    var usuariomaiorpontuacao = dados[0].NomeUsuario
+
+    p_kpiquatro.innerHTML = `${usuariomaiorpontuacao}`
+
+  }
+
+  function gerarkpimaiorpontuacao(dados) {
+    var maiorpontuacao = dados[0].Pontuacao
+
+    p_kpicinco.innerHTML = `${maiorpontuacao}`
+
+  }
+
+
+
+
 
 
   function carregarPerfil() {

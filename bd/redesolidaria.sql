@@ -113,10 +113,8 @@ INSERT INTO estado (idestado, estado, fk_regiao) VALUES
 -- Tabela de quiz
 CREATE TABLE quiz (
     idquiz INT PRIMARY KEY AUTO_INCREMENT,
-    pontuacao INT,  
-    tempo_total INT-- minutos, segundos  
+    pontuacao INT  
 );
-
 
 
 -- Tabela de usuário
@@ -136,13 +134,54 @@ CREATE TABLE usuario (
     foreign key (fk_quiz) references quiz(idquiz)
 );
 
+
+INSERT INTO quiz (idquiz, pontuacao) VALUES
+(1, 1), 
+(2, 2), 
+(3, 3), 
+(4, 4),
+(5,  5),
+(6, 6), 
+(7, 7); 
+
 -- Inserção de dados na tabela de usuário
-INSERT INTO usuario (nome, cpf, email, senha, fk_questionarioperfil, fk_questionarioregiao, fk_estado) 
+INSERT INTO usuario (nome, cpf, email, senha, fk_questionarioperfil, fk_questionarioregiao, fk_estado, fk_quiz) 
 VALUES 
-('Liz', '36176829877', 'liz.bohn@sptech.school', 'abc12345', 3, 2, 5),
-('Maria', '36176829870', 'abc@outlook.com', 'abc12346', 2, 1, 1),
-('Paula', '36176829899', 'teste@outlook.com', 'abc12341', 2, 1, 1),
-('Carla', '36176829879', 'abcd123@hotmail.com', 'abc12342', 4, 3, 10);
+('Liz', '36176829877', 'liz.bohn@sptech.school', 'abc12345', 3, 2, 5, 4),
+('Maria', '36176829870', 'abc@outlook.com', 'abc12346', 2, 1, 1, 5),
+('Paula', '36176829899', 'teste@outlook.com', 'abc12341', 2, 1, 1,4),
+('Carla', '36176829879', 'abcd123@hotmail.com', 'abc12342', 4, 3, 10, 7);
+
+
+
+
+
+
+SELECT 
+    q.idquiz,
+    q.pontuacao,
+    COUNT(u.id) AS QtdUsuarios
+FROM 
+    usuario u
+JOIN 
+    quiz q ON u.fk_quiz = q.idquiz
+GROUP BY 
+    q.idquiz, q.pontuacao
+ORDER BY 
+    q.pontuacao DESC, QtdUsuarios DESC;
+
+
+SELECT 
+    u.nome AS NomeUsuario,
+    q.pontuacao AS Pontuacao
+FROM 
+    usuario u
+JOIN 
+    quiz q ON u.fk_quiz = q.idquiz
+ORDER BY 
+    q.pontuacao DESC;
+
+
 
 
 
@@ -172,22 +211,65 @@ FROM usuario u
 JOIN questionarioregiao r ON u.fk_questionarioregiao = r.idlocal
 GROUP BY r.idlocal;
 
+
+    
 -- Inserção de dados na tabela quiz
-INSERT INTO quiz (pontuacao, tempo_total) 
-VALUES (8, 150),
-       (6, 120),
-       (9, 180),
-       (10, 240);
+-- INSERT INTO quiz (pontuacao) 
+-- VALUES (8),
+ --      (6),
+ --      (9),
+  --     (10);
 
 
 
--- Consultar média do tempo total
-SELECT AVG(tempo_total) AS 'Média do Tempo Total'
-FROM quiz;
+
 
 -- Consultar maior pontuação
 SELECT MAX(pontuacao) AS 'Maior Pontuação'
 FROM quiz;
+
+-- Consultar usuário com maior pontuação
+SELECT usuario.nome
+FROM usuario
+JOIN quiz ON usuario.fk_quiz = quiz.idquiz
+WHERE quiz.pontuacao = (SELECT MAX(pontuacao) FROM quiz);
+
+UPDATE quiz 
+JOIN usuario ON usuario.fk_quiz = quiz.idquiz
+SET fk_quiz = 3
+WHERE usuario.id = 2;
+
+SELECT 
+    u.nome AS NomeUsuario,
+    q.pontuacao AS Pontuacao
+FROM 
+    usuario u
+JOIN 
+    quiz q ON u.fk_quiz = q.idquiz
+ORDER BY 
+    q.pontuacao DESC;
+
+
+    SELECT e.estado, r.regiaobrasil AS regiao, COUNT(u.id) AS QtdUsuarios
+    FROM usuario u
+    JOIN estado e ON u.fk_estado = e.idestado
+    JOIN questionarioregiao r ON u.fk_questionarioregiao = r.idlocal
+    GROUP BY e.estado, r.regiaobrasil
+    ORDER BY QtdUsuarios DESC;
+
+
+SELECT 
+    u.nome AS NomeUsuario,
+    q.pontuacao AS Pontuacao
+FROM 
+    usuario u
+JOIN 
+    quiz q ON u.fk_quiz = q.idquiz
+ORDER BY 
+    q.pontuacao DESC;
+
+
+select * from usuario;
 
 -- Consultar todos os dados
 SELECT * FROM usuario;
